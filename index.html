@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Laporan LTT PPL Milenial - King Mamank</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        body { background: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        
+        .page {
+            background: white; width: 210mm; min-height: 297mm;
+            padding: 20mm 25mm; margin: 20px auto; color: black;
+            font-family: 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.5;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5); position: relative;
+        }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid black; padding: 6px 10px; text-align: left; }
+        th { background-color: #f3f4f6; font-weight: bold; text-align: center; }
+
+        /* UI Controls */
+        .no-print-area { background: #1e293b; border-radius: 15px; padding: 25px; margin-bottom: 30px; border: 1px solid #334155; }
+        .input-card { background: #334155; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+        textarea, select, input { width: 100%; background: #0f172a; border: 1px solid #475569; color: white; padding: 8px; border-radius: 6px; margin-top: 8px; font-size: 13px; }
+        
+        /* Kalender picker icon color */
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
+
+        @media print {
+            @page { size: A4; margin: 0; }
+            .no-print { display: none !important; }
+            body { background: white; padding: 0; }
+            .page { margin: 0; box-shadow: none; width: 210mm; height: 297mm; }
+        }
+
+        .report-container { width: 100%; display: flex; justify-content: center; }
+
+        .sig-container { position: relative; display: inline-block; text-align: center; margin-top: 10px; }
+        .img-ttd { position: absolute; left: 50%; transform: translateX(-50%); bottom: -10px; max-height: 80px; width: auto; z-index: 10; mix-blend-mode: multiply; }
+        .sig-name { position: relative; z-index: 5; font-weight: bold; text-decoration: underline; text-transform: uppercase; }
+
+    </style>
+</head>
+<body>
+
+<div class="no-print max-w-6xl mx-auto p-4 md:p-6">
+    <div class="no-print-area shadow-2xl border-t-4 border-emerald-500">
+        <h2 class="text-2xl font-bold text-emerald-400 mb-6 flex items-center gap-3">
+            <i class="fa-solid fa-file-invoice"></i> PPL REPORT GENERATOR - LTT TANAMAN PANGAN
+        </h2>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+            <div class="lg:col-span-1 space-y-3">
+                <label class="text-xs font-bold text-slate-400 uppercase">Identitas Penyuluh</label>
+                <input type="text" id="in_nama" oninput="sync()" placeholder="Abdul Rahman, SP">
+                <input type="text" id="in_nip" oninput="sync()" placeholder="19xxxxxxxxxxxxx">
+                
+                <select id="in_gol" onchange="sync()">
+                    <option value="">-- Pilih Pangkat/Gol --</option>
+                    <option value="Penata Muda, III/a">Penata Muda, III/a</option>
+                    <option value="Penata Muda Tk. I, III/b">Penata Muda Tk. I, III/b</option>
+                    <option value="Penata, III/c">Penata, III/c</option>
+                    <option value="Penata Tk. I, III/d">Penata Tk. I, III/d</option>
+                </select>
+
+                <select id="in_jabatan" onchange="sync()">
+                    <option value="">-- Pilih Jabatan --</option>
+                    <option value="Penyuluh Pertanian Ahli Pertama">Penyuluh Pertanian Ahli Pertama</option>
+                    <option value="Penyuluh Pertanian Ahli Muda">Penyuluh Pertanian Ahli Muda</option>
+                    <option value="Penyuluh Pertanian Ahli Madya">Penyuluh Pertanian Ahli Madya</option>
+                </select>
+
+                <select id="in_komoditi" onchange="sync()">
+                    <option value="Padi">Padi</option>
+                    <option value="Jagung">Jagung</option>
+                    <option value="Kedelai">Kedelai</option>
+                </select>
+
+                <input type="text" id="in_wilbin" oninput="sync()" placeholder="Desa Manurung">
+                
+                <label class="text-xs font-bold text-slate-400 uppercase pt-2 block">Tanggal Laporan (TTD)</label>
+                <input type="date" id="in_tanggal" onchange="sync()">
+                
+                <label class="text-xs font-bold text-emerald-400 uppercase pt-2 block">Upload Tanda Tangan (PNG)</label>
+                <input type="file" id="in_ttd" accept="image/png, image/jpeg" onchange="handleTTD(this)" class="text-xs file:bg-emerald-600 file:border-none file:text-white file:rounded file:px-2 file:py-1 cursor-pointer">
+            </div>
+
+            <div class="lg:col-span-3 space-y-4">
+                <label class="text-xs font-bold text-slate-400 uppercase block">Data LTT Kelompok Tani</label>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="input_container"></div>
+                <button onclick="addRow()" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-1.5 rounded-lg text-xs font-bold transition">
+                    + Tambah Kelompok
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="input-card"><label class="text-xs font-bold text-slate-400 uppercase">Target <span class="label-komoditi">Padi</span> Bulan Ini (Ha)</label><input type="number" id="in_target" oninput="sync()"></div>
+            <div class="input-card col-span-1 md:col-span-2"><label class="text-xs font-bold text-slate-400 uppercase">Kendala Utama</label><textarea id="in_kendala" oninput="sync()"></textarea></div>
+        </div>
+
+        <div class="input-card relative mb-8">
+            <label class="text-xs font-bold text-purple-400 uppercase">Upaya Tindak Lanjut</label>
+            <button onclick="generateAI()" id="btn-ai" class="absolute top-3 right-3 bg-purple-600 hover:bg-purple-700 text-xs font-bold py-1 px-3 rounded-full transition">
+                ✨ GENERATE AI
+            </button>
+            <textarea id="in_tindak" oninput="sync()" class="min-h-[100px]"></textarea>
+        </div>
+
+        <button onclick="window.print()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-4 rounded-xl font-bold text-white shadow-lg transition transform hover:scale-[1.02]">
+            🖨️ CETAK / SIMPAN LAPORAN KE PDF
+        </button>
+    </div>
+</div>
+
+<div class="report-container">
+    <div class="page" id="report">
+        <div class="text-center font-bold underline text-lg mb-1">LAPORAN LUAS TAMBAH TANAM</div>
+        <div class="text-center font-bold mb-8 uppercase">(Komoditi <span id="out_komoditi">Padi</span>)</div>
+
+        <div class="space-y-1 mb-8 text-sm">
+            <div class="flex"><span class="w-44">Nama / NIP</span><span>: <span id="out_nama" class="font-bold">-</span> / <span id="out_nip">-</span></span></div>
+            <div class="flex"><span class="w-44">Pangkat / Golongan</span><span>: <span id="out_gol">-</span></span></div>
+            <div class="flex"><span class="w-44">Jabatan</span><span>: <span id="out_jabatan">Penyuluh Pertanian Ahli Pertama</span></span></div>
+            <div class="flex"><span class="w-44">Wilayah Binaan (Wilbin)</span><span>: <span id="out_wilbin" class="font-bold">-</span></span></div>
+            <div class="flex"><span class="w-44">Periode</span><span>: <span id="out_periode">-</span></span></div>
+            <div class="flex"><span class="w-44">Hasil Kegiatan</span><span>:</span></div>
+        </div>
+
+        <table class="mb-8">
+            <thead>
+                <tr><th class="w-12">No</th><th>Kelompok Tani</th><th class="w-56 text-center">Jumlah Luas Tambah Tanam</th></tr>
+            </thead>
+            <tbody id="out_table_body"></tbody>
+            <tfoot>
+                <tr class="font-bold bg-gray-50"><td colspan="2" class="text-right">Jumlah</td><td id="out_total" class="text-center">0 Ha</td></tr>
+            </tfoot>
+        </table>
+
+        <div class="font-bold text-sm mb-3">Ringkasan Bulanan</div>
+        <table class="border-none text-sm leading-relaxed">
+            <tr class="border-none"><td class="border-none w-52 p-1">• Target LTT <span class="label-komoditi">Padi</span> bulan ini</td><td class="border-none p-1">: <span id="out_target">0</span> Ha</td></tr>
+            <tr class="border-none"><td class="border-none p-1">• Realisasi LTT <span class="label-komoditi">Padi</span></td><td class="border-none p-1">: <span id="out_realisasi" class="font-bold">0</span> Ha</td></tr>
+            <tr class="border-none"><td class="border-none p-1">• Kendala utama</td><td class="border-none p-1 text-justify">: <span id="out_kendala">-</span></td></tr>
+            <tr class="border-none"><td class="border-none p-1">• Upaya tindak lanjut</td><td class="border-none p-1 text-justify">: <span id="out_tindak" class="italic text-gray-400">Menunggu input AI...</span></td></tr>
+        </table>
+
+        <div class="mt-16 flex justify-end">
+            <div class="text-center sig-container">
+                <span id="out_lokasi_tgl">..., ...</span><br>
+                Penyuluh Pertanian,
+                <div class="h-20 flex items-center justify-center relative">
+                    <img id="out_ttd_img" src="" class="img-ttd hidden">
+                </div>
+                <div class="sig-name" id="out_nama_ttd">-</div>
+                NIP. <span id="out_nip_ttd"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let rows = [
+        { kelompok: "Nama Poktan 1", luas: 0 },
+        { kelompok: "Nama Poktan 2", luas: 0 },
+        { kelompok: "Nama Poktan 3", luas: 0 }
+    ];
+
+    function formatTanggalIndo(dateString) {
+        if(!dateString) return "..., ...";
+        const date = new Date(dateString);
+        const options = { day: 'numeric', month: 'long', year: 'numeric' };
+        return date.toLocaleDateString('id-ID', options);
+    }
+
+    function getBulanTahun(dateString) {
+        if(!dateString) return "-";
+        const date = new Date(dateString);
+        const options = { month: 'long', year: 'numeric' };
+        return date.toLocaleDateString('id-ID', options);
+    }
+
+    function addRow() { rows.push({ kelompok: "", luas: 0 }); renderInputs(); sync(); }
+    function removeRow(index) { rows.splice(index, 1); renderInputs(); sync(); }
+    function updateRow(index, field, value) { rows[index][field] = value; sync(); }
+
+    function renderInputs() {
+        const container = document.getElementById('input_container');
+        container.innerHTML = rows.map((row, index) => `
+            <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 flex items-center gap-2 text-xs">
+                <span class="font-bold text-slate-500">${index + 1}.</span>
+                <input type="text" value="${row.kelompok}" oninput="updateRow(${index}, 'kelompok', this.value)" class="flex-grow !mt-0 !p-1.5" placeholder="Nama Poktan">
+                <input type="number" value="${row.luas}" oninput="updateRow(${index}, 'luas', this.value)" class="w-20 !mt-0 !p-1.5 text-center" placeholder="Ha">
+                <button onclick="removeRow(${index})" class="text-red-500 hover:text-red-400 text-sm ml-1">✖</button>
+            </div>
+        `).join('');
+    }
+
+    function handleTTD(input) {
+        const img = document.getElementById('out_ttd_img');
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => { img.src = e.target.result; img.classList.remove('hidden'); };
+            reader.readAsDataURL(input.files[0]);
+        } else { img.classList.add('hidden'); }
+    }
+
+    function sync() {
+        const val = (id) => document.getElementById(id).value;
+        const out = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text || "-"; };
+
+        out('out_nama', val('in_nama'));
+        out('out_nip', val('in_nip'));
+        out('out_gol', val('in_gol'));
+        out('out_jabatan', val('in_jabatan'));
+        out('out_wilbin', val('in_wilbin'));
+        
+        // Sync Komoditi
+        const komoditi = val('in_komoditi');
+        out('out_komoditi', komoditi);
+        out('ui_komoditi_title', komoditi.toUpperCase());
+        document.querySelectorAll('.label-komoditi').forEach(el => el.innerText = komoditi);
+        
+        const tglInput = val('in_tanggal');
+        out('out_periode', getBulanTahun(tglInput));
+        
+        const tbody = document.getElementById('out_table_body');
+        tbody.innerHTML = "";
+        let total = 0;
+        
+        rows.forEach((row, i) => {
+            if(!row.kelompok && !row.luas) return;
+            total += parseFloat(row.luas || 0);
+            tbody.innerHTML += `<tr><td class="text-center">${i + 1}</td><td>${row.kelompok || '-'}</td><td class="text-center">${row.luas || 0}</td></tr>`;
+        });
+
+        out('out_total', total + " Ha");
+        out('out_realisasi', total);
+        out('out_target', val('in_target') || 0);
+        out('out_kendala', val('in_kendala'));
+        
+        const tindak = val('in_tindak');
+        document.getElementById('out_tindak').innerText = tindak || "Menunggu input...";
+        if(tindak) document.getElementById('out_tindak').classList.remove('italic', 'text-gray-400');
+
+        out('out_nama_ttd', val('in_nama'));
+        out('out_nip_ttd', val('in_nip'));
+        
+        const wilayah = val('in_wilbin') || "...";
+        document.getElementById('out_lokasi_tgl').innerText = wilayah + ", " + formatTanggalIndo(tglInput);
+    }
+
+    async function generateAI() {
+        const btn = document.getElementById('btn-ai');
+        const kendala = document.getElementById('in_kendala').value;
+        const realisasi = document.getElementById('out_realisasi').innerText;
+        const target = document.getElementById('in_target').value;
+        const komoditi = document.getElementById('in_komoditi').value;
+        const key = "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"; 
+
+        if(!kendala) return alert("Mohon isi Kendala Utama terlebih dahulu.");
+        
+        btn.disabled = true; btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Processing...";
+
+        try {
+            const prompt = `Anda adalah Penyuluh Pertanian profesional. Buat 2 kalimat formal naratif untuk 'Upaya Tindak Lanjut' laporan bulanan berdasarkan data ini: Komoditi ${komoditi}. Realisasi LTT: ${realisasi} Ha dari Target: ${target} Ha. Kendala Utama: "${kendala}". Fokus pada solusi teknis pertanian dan koordinasi kelompok tani.`;
+            const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+                body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages: [{ role: "user", content: prompt }] })
+            });
+            const data = await res.json();
+            document.getElementById('in_tindak').value = data.choices[0].message.content.trim();
+            sync();
+        } catch (e) { alert("Gagal memanggil AI. Cek koneksi."); } 
+        finally { btn.disabled = false; btn.innerText = "✨ GENERATE AI"; }
+    }
+
+    document.getElementById('in_tanggal').valueAsDate = new Date();
+    renderInputs();
+    sync();
+</script>
+
+</body>
+</html>
