@@ -267,7 +267,10 @@
         btn.disabled = true; btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Processing...";
 
         try {
-            const prompt = `Anda adalah Penyuluh Pertanian profesional. Buat 2 kalimat formal naratif untuk 'Upaya Tindak Lanjut' laporan bulanan berdasarkan data ini: Komoditi ${komoditi}. Realisasi LTT: ${realisasi} Ha dari Target: ${target} Ha. Kendala Utama: "${kendala}". Fokus pada solusi teknis pertanian dan koordinasi kelompok tani.`;
+            const prompt = `Anda adalah Penyuluh Pertanian profesional.
+            Buat 1 kalimat formal naratif untuk 'Upaya Tindak Lanjut' laporan bulanan berdasarkan data ini:
+            Komoditi ${komoditi}. Realisasi LTT: ${realisasi} Ha dari Target: ${target} Ha. Kendala Utama: "${kendala}".
+            Fokus pada solusi teknis pertanian dan koordinasi kelompok tani.`;
             const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
