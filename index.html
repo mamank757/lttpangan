@@ -22,12 +22,10 @@
         th, td { border: 1px solid black; padding: 1px 10px; text-align: left; }
         th { background-color: #f3f4f6; font-weight: bold; text-align: center; }
 
-        /* UI Controls */
         .no-print-area { background: #1e293b; border-radius: 15px; padding: 25px; margin-bottom: 30px; border: 1px solid #334155; }
         .input-card { background: #334155; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
         textarea, select, input { width: 100%; background: #0f172a; border: 1px solid #475569; color: white; padding: 8px; border-radius: 6px; margin-top: 8px; font-size: 13px; }
         
-        /* Kalender picker icon color */
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
 
         @media print {
@@ -38,11 +36,9 @@
         }
 
         .report-container { width: 100%; display: flex; justify-content: center; }
-
         .sig-container { position: relative; display: inline-block; text-align: center; margin-top: 10px; }
         .img-ttd { position: absolute; left: 50%; transform: translateX(-50%); bottom: -10px; max-height: 80px; width: auto; z-index: 10; mix-blend-mode: multiply; }
         .sig-name { position: relative; z-index: 5; font-weight: bold; text-decoration: underline; text-transform: uppercase; }
-
     </style>
 </head>
 <body>
@@ -56,28 +52,47 @@
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
             <div class="lg:col-span-1 space-y-3">
                 <label class="text-xs font-bold text-slate-400 uppercase">Identitas Penyuluh</label>
-                <input type="text" id="in_nama" oninput="sync()" placeholder="Abdul Rahman, SP">
-                <input type="text" id="in_nip" oninput="sync()" placeholder="19xxxxxxxxxxxxx">
+                <input type="text" id="in_nama" list="daftar_nama" oninput="updateDataPenyuluh()" placeholder="Pilih atau Ketik Nama">
+                <datalist id="daftar_nama">
+                    <option value="ABDUL RAHMAN, SP">
+                    <option value="A. FATHUR MUH. ISHAQ B, S.ST., M.Si">
+                    <option value="ANDI LUTHFIAH, SP">
+                    <option value="FITRIYANTI HASNURI, S.TP">
+                    <option value="INDRA YULIANA, S.TP., M.Si.">
+                    <option value="MIFTAHUL KHAIR, S.P.">
+                    <option value="NURUL FAHMI, S.P.">
+                    <option value="REZKI RAHAYU, S.P.">
+                    <option value="RIZAL SMITH ANUGRAH SYAM, S.P.">
+                    <option value="SUHADY HAMDAN, S.P.">
+                    <option value="SULFIANITA, S.P.">
+                    <option value="SURAHMAN, S.TP">
+                    <option value="UMAR, SP">
+                </datalist>
+
+                <input type="text" id="in_nip" oninput="sync()" placeholder="NIP">
                 
                 <select id="in_gol" onchange="sync()">
                     <option value="">-- Pilih Pangkat/Gol --</option>
-                     <option value="Pengatur Muda (II/a)">Pengatur Muda (II/a)</option>
-                      <option value="Pengatur Muda Tk. I (II/b)">Pengatur Muda Tk. I (II/b)</option>
-                       <option value="Pengatur (II/c)">Pengatur (II/c)</option>
-                        <option value="Pengatur Tk. I (II/d).">Pengatur Tk. I (II/d).</option>
+                    <option value="Pengatur Muda (I/a)">Pengatur Muda (II/a)</option>
+                    <option value="Pengatur Muda Tk. I (II/b)">Pengatur Muda Tk. I (II/b)</option>
+                    <option value="Pengatur (II/c)">Pengatur (II/c)</option>
+                    <option value="Pengatur Tk. I (II/d)">Pengatur Tk. I (II/d)</option>
                     <option value="Penata Muda, III/a">Penata Muda, III/a</option>
                     <option value="Penata Muda Tk. I, III/b">Penata Muda Tk. I, III/b</option>
                     <option value="Penata, III/c">Penata, III/c</option>
                     <option value="Penata Tk. I, III/d">Penata Tk. I, III/d</option>
                     <option value="Pembina (IV/a)">Pembina (IV/a)</option>
                     <option value="Pembina Tk. I (IV/b)">Pembina Tk. I (IV/b)</option>
+                    <option value="Pembina Muda (IV/c)">Pembina Utama Muda (IV/c)</option>
+                    <option value="Pembina Utama Muda (IV/d)">Pembina Utama Madya (IV/d)</option>
+                    <option value="Pembina Utama (IV/e)">Pembina Utama (IV/e)</option>
                 </select>
 
                 <select id="in_jabatan" onchange="sync()">
                     <option value="">-- Pilih Jabatan --</option>
-                    <option value="Penyuluh Pertanian Ahli Pertama">Penyuluh Pertanian Terampil</option>
-                    <option value="Penyuluh Pertanian Ahli Pertama">Penyuluh Pertanian Mahir</option>
-                    <option value="Penyuluh Pertanian Ahli Pertama">Penyuluh Pertanian Penyelia</option>
+                    <option value="Penyuluh Pertanian Terampil">Penyuluh Pertanian Terampil</option>
+                    <option value="Penyuluh Pertanian Mahir">Penyuluh Pertanian Mahir</option>
+                    <option value="Penyuluh Pertanian Penyelia">Penyuluh Pertanian Penyelia</option>
                     <option value="Penyuluh Pertanian Ahli Pertama">Penyuluh Pertanian Ahli Pertama</option>
                     <option value="Penyuluh Pertanian Ahli Muda">Penyuluh Pertanian Ahli Muda</option>
                     <option value="Penyuluh Pertanian Ahli Madya">Penyuluh Pertanian Ahli Madya</option>
@@ -89,40 +104,35 @@
                     <option value="Kedelai">Kedelai</option>
                 </select>
 
-                <input type="text" id="in_wilbin" oninput="sync()" placeholder="Desa Manurung">
+                <input type="text" id="in_kecamatan" oninput="sync()" placeholder="Kecamatan (Contoh: Bola)">
+                <input type="text" id="in_wilbin" oninput="sync()" placeholder="Wilayah Binaan (Contoh: Desa Manurung)">
                 
                 <label class="text-xs font-bold text-slate-400 uppercase pt-2 block">Tanggal Laporan (TTD)</label>
                 <input type="date" id="in_tanggal" onchange="sync()">
                 
                 <label class="text-xs font-bold text-emerald-400 uppercase pt-2 block">Upload Tanda Tangan (PNG)</label>
-                <input type="file" id="in_ttd" accept="image/png, image/jpeg" onchange="handleTTD(this)" class="text-xs file:bg-emerald-600 file:border-none file:text-white file:rounded file:px-2 file:py-1 cursor-pointer">
+                <input type="file" id="in_ttd" accept="image/png, image/jpeg" onchange="handleTTD(this)">
             </div>
 
             <div class="lg:col-span-3 space-y-4">
                 <label class="text-xs font-bold text-slate-400 uppercase block">Data LTT Kelompok Tani</label>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="input_container"></div>
-                <button onclick="addRow()" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-1.5 rounded-lg text-xs font-bold transition">
-                    + Tambah Kelompok
-                </button>
+                <button onclick="addRow()" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-1.5 rounded-lg text-xs font-bold transition">+ Tambah Kelompok</button>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="input-card"><label class="text-xs font-bold text-slate-400 uppercase">Target <span class="label-komoditi">Padi</span> Bulan Ini (Ha)</label><input type="number" id="in_target" oninput="sync()"></div>
-            <div class="input-card col-span-1 md:col-span-2"><label class="text-xs font-bold text-slate-400 uppercase">Kendala Utama (Wajib ditulis manual dengan singkat)</label><textarea id="in_kendala" oninput="sync()"></textarea></div>
+            <div class="input-card col-span-1 md:col-span-2"><label class="text-xs font-bold text-slate-400 uppercase">Kendala Utama</label><textarea id="in_kendala" oninput="sync()"></textarea></div>
         </div>
 
         <div class="input-card relative mb-8">
             <label class="text-xs font-bold text-purple-400 uppercase">Upaya Tindak Lanjut</label>
-            <button onclick="generateAI()" id="btn-ai" class="absolute top-3 right-3 bg-purple-600 hover:bg-purple-700 text-xs font-bold py-1 px-3 rounded-full transition">
-                ✨ GENERATE AI
-            </button>
+            <button onclick="generateAI()" id="btn-ai" class="absolute top-3 right-3 bg-purple-600 hover:bg-purple-700 text-xs font-bold py-1 px-3 rounded-full transition">✨ GENERATE AI</button>
             <textarea id="in_tindak" oninput="sync()" class="min-h-[100px]"></textarea>
         </div>
 
-        <button onclick="window.print()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-4 rounded-xl font-bold text-white shadow-lg transition transform hover:scale-[1.02]">
-            🖨️ CETAK / SIMPAN LAPORAN KE PDF
-        </button>
+        <button onclick="window.print()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-4 rounded-xl font-bold text-white shadow-lg transition transform hover:scale-[1.02]">🖨️ CETAK / SIMPAN LAPORAN KE PDF</button>
     </div>
 </div>
 
@@ -134,7 +144,7 @@
         <div class="space-y-1 mb-8 text-sm">
             <div class="flex"><span class="w-44">Nama / NIP</span><span>: <span id="out_nama" class="font-bold">-</span> / <span id="out_nip">-</span></span></div>
             <div class="flex"><span class="w-44">Pangkat / Golongan</span><span>: <span id="out_gol">-</span></span></div>
-            <div class="flex"><span class="w-44">Jabatan</span><span>: <span id="out_jabatan">Penyuluh Pertanian Ahli Pertama</span></span></div>
+            <div class="flex"><span class="w-44">Jabatan</span><span>: <span id="out_jabatan">-</span></span></div>
             <div class="flex"><span class="w-44">Wilayah Binaan (Wilbin)</span><span>: <span id="out_wilbin" class="font-bold">-</span></span></div>
             <div class="flex"><span class="w-44">Periode</span><span>: <span id="out_periode">-</span></span></div>
             <div class="flex"><span class="w-44">Hasil Kegiatan</span><span>:</span></div>
@@ -142,7 +152,7 @@
 
         <table class="mb-8">
             <thead>
-                <tr><th class="w-12">No</th><th>Kelompok Tani</th><th class="w-56 text-center">Jumlah Luas Tambah Tanam</th></tr>
+                <tr><th class="w-12">No</th><th>Kelompok Tani</th><th class="w-56 text-center">Luas Tambah Tanam (Ha)</th></tr>
             </thead>
             <tbody id="out_table_body"></tbody>
             <tfoot>
@@ -152,10 +162,10 @@
 
         <div class="font-bold text-sm mb-3">Ringkasan Bulanan</div>
         <table class="border-none text-sm leading-relaxed">
-            <tr class="border-none"><td class="border-none w-52 p-1">• Target LTT <span class="label-komoditi">Padi</span> bulan ini</td><td class="border-none p-1">: <span id="out_target">0</span> Ha</td></tr>
+            <tr class="border-none"><td class="border-none w-52 p-1">• Target LTT <span class="label-komoditi">Padi</span></td><td class="border-none p-1">: <span id="out_target">0</span> Ha</td></tr>
             <tr class="border-none"><td class="border-none p-1">• Realisasi LTT <span class="label-komoditi">Padi</span></td><td class="border-none p-1">: <span id="out_realisasi" class="font-bold">0</span> Ha</td></tr>
             <tr class="border-none"><td class="border-none p-1">• Kendala utama</td><td class="border-none p-1 text-justify">: <span id="out_kendala">-</span></td></tr>
-            <tr class="border-none"><td class="border-none p-1">• Upaya tindak lanjut</td><td class="border-none p-1 text-justify">: <span id="out_tindak" class="italic text-gray-400">Menunggu input AI...</span></td></tr>
+            <tr class="border-none"><td class="border-none p-1">• Upaya tindak lanjut</td><td class="border-none p-1 text-justify">: <span id="out_tindak" class="italic text-gray-400">Menunggu input...</span></td></tr>
         </table>
 
         <div class="mt-16 flex justify-end">
@@ -173,24 +183,42 @@
 </div>
 
 <script>
-    let rows = [
-        { kelompok: "Nama Poktan 1", luas: 0 },
-        { kelompok: "Nama Poktan 2", luas: 0 },
-        { kelompok: "Nama Poktan 3", luas: 0 }
-    ];
+    const dataPenyuluh = {
+        "ABDUL RAHMAN, SP": { nip: "199009202020121001", wilayah: "Desa Manurung" },
+        "A. FATHUR MUH. ISHAQ B, S.ST., M.Si": { nip: "199604112020121001", wilayah: "Kel. Laelo, Kel. Tempe, Kel. Cempalagi" },
+        "ANDI LUTHFIAH, SP": { nip: "199307162020122003", wilayah: "Desa Mannagae & Desa Assorajang" },
+        "FITRIYANTI HASNURI, S.TP": { nip: "199409042020122001", wilayah: "Desa Ongkoe" },
+        "INDRA YULIANA, S.TP., M.Si.": { nip: "199307062020122001", wilayah: "Desa Alewadeng" },
+        "MIFTAHUL KHAIR, S.P.": { nip: "199311192020122003", wilayah: "Desa Lempa" },
+        "NURUL FAHMI, S.P.": { nip: "198911142020122002", wilayah: "Desa Bottobenteng & Desa Rumpia" },
+        "REZKI RAHAYU, S.P.": { nip: "199507052020122003", wilayah: "Kelurahan Mappadaelo" },
+        "RIZAL SMITH ANUGRAH SYAM, S.P.": { nip: "199005152020121001", wilayah: "Desa Worongnge" },
+        "SUHADY HAMDAN, S.P.": { nip: "199202072020121001", wilayah: "Desa Paselloreng & Kelurahan Gilireng" },
+        "SULFIANITA, S.P.": { nip: "199505082020122004", wilayah: "Desa Simpursia" },
+        "SURAHMAN, S.TP": { nip: "199203122020121003", wilayah: "Desa Barangmamase" },
+        "UMAR, SP": { nip: "199408272020121001", wilayah: "Desa Walanga & Desa Raddae" }
+    };
+
+    function updateDataPenyuluh() {
+        const nama = document.getElementById("in_nama").value;
+        const data = dataPenyuluh[nama];
+        if (data) {
+            document.getElementById("in_nip").value = data.nip;
+            document.getElementById("in_wilbin").value = data.wilayah;
+        }
+        sync();
+    }
+
+    let rows = [{ kelompok: "Nama Poktan 1", luas: 0 }, { kelompok: "Nama Poktan 2", luas: 0 }, { kelompok: "Nama Poktan 3", luas: 0 }];
 
     function formatTanggalIndo(dateString) {
         if(!dateString) return "..., ...";
-        const date = new Date(dateString);
-        const options = { day: 'numeric', month: 'long', year: 'numeric' };
-        return date.toLocaleDateString('id-ID', options);
+        return new Date(dateString).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
     }
 
     function getBulanTahun(dateString) {
         if(!dateString) return "-";
-        const date = new Date(dateString);
-        const options = { month: 'long', year: 'numeric' };
-        return date.toLocaleDateString('id-ID', options);
+        return new Date(dateString).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
     }
 
     function addRow() { rows.push({ kelompok: "", luas: 0 }); renderInputs(); sync(); }
@@ -198,8 +226,7 @@
     function updateRow(index, field, value) { rows[index][field] = value; sync(); }
 
     function renderInputs() {
-        const container = document.getElementById('input_container');
-        container.innerHTML = rows.map((row, index) => `
+        document.getElementById('input_container').innerHTML = rows.map((row, index) => `
             <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700 flex items-center gap-2 text-xs">
                 <span class="font-bold text-slate-500">${index + 1}.</span>
                 <input type="text" value="${row.kelompok}" oninput="updateRow(${index}, 'kelompok', this.value)" class="flex-grow !mt-0 !p-1.5" placeholder="Nama Poktan">
@@ -215,7 +242,7 @@
             const reader = new FileReader();
             reader.onload = (e) => { img.src = e.target.result; img.classList.remove('hidden'); };
             reader.readAsDataURL(input.files[0]);
-        } else { img.classList.add('hidden'); }
+        }
     }
 
     function sync() {
@@ -228,74 +255,52 @@
         out('out_jabatan', val('in_jabatan'));
         out('out_wilbin', val('in_wilbin'));
         
-        // Sync Komoditi
-        const komoditi = val('in_komoditi');
-        out('out_komoditi', komoditi);
-        out('ui_komoditi_title', komoditi.toUpperCase());
-        document.querySelectorAll('.label-komoditi').forEach(el => el.innerText = komoditi);
+        const komo = val('in_komoditi');
+        out('out_komoditi', komo);
+        document.querySelectorAll('.label-komoditi').forEach(el => el.innerText = komo);
         
-        const tglInput = val('in_tanggal');
-        out('out_periode', getBulanTahun(tglInput));
+        const tgl = val('in_tanggal');
+        out('out_periode', getBulanTahun(tgl));
         
-        const tbody = document.getElementById('out_table_body');
-        tbody.innerHTML = "";
+        // UPDATE LOKASI TTD: KECAMATAN + TANGGAL
+        const kecamatan = val('in_kecamatan') || "...";
+        document.getElementById('out_lokasi_tgl').innerText = kecamatan + ", " + formatTanggalIndo(tgl);
+
         let total = 0;
-        
-        rows.forEach((row, i) => {
-            if(!row.kelompok && !row.luas) return;
+        document.getElementById('out_table_body').innerHTML = rows.map((row, i) => {
             total += parseFloat(row.luas || 0);
-            tbody.innerHTML += `<tr><td class="text-center">${i + 1}</td><td>${row.kelompok || '-'}</td><td class="text-center">${row.luas || 0}</td></tr>`;
-        });
+            return `<tr><td class="text-center">${i + 1}</td><td>${row.kelompok || '-'}</td><td class="text-center">${row.luas || 0}</td></tr>`;
+        }).join('');
 
         out('out_total', total + " Ha");
         out('out_realisasi', total);
-        out('out_target', val('in_target') || 0);
+        out('out_target', val('in_target'));
         out('out_kendala', val('in_kendala'));
-        
-        const tindak = val('in_tindak');
-        document.getElementById('out_tindak').innerText = tindak || "Menunggu input...";
-        if(tindak) document.getElementById('out_tindak').classList.remove('italic', 'text-gray-400');
-
+        out('out_tindak', val('in_tindak'));
         out('out_nama_ttd', val('in_nama'));
         out('out_nip_ttd', val('in_nip'));
-        
-        const wilayah = val('in_wilbin') || "...";
-        document.getElementById('out_lokasi_tgl').innerText = wilayah + ", " + formatTanggalIndo(tglInput);
     }
 
     async function generateAI() {
         const btn = document.getElementById('btn-ai');
         const kendala = document.getElementById('in_kendala').value;
-        const realisasi = document.getElementById('out_realisasi').innerText;
-        const target = document.getElementById('in_target').value;
-        const komoditi = document.getElementById('in_komoditi').value;
-        const key = "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"; 
-
-        if(!kendala) return alert("Mohon isi Kendala Utama terlebih dahulu.");
-        
-        btn.disabled = true; btn.innerHTML = "<i class='fas fa-spinner fa-spin'></i> Processing...";
-
+        if(!kendala) return alert("Isi kendala dulu.");
+        btn.disabled = true; btn.innerText = "⏳...";
         try {
-            const prompt = `Anda adalah Penyuluh Pertanian profesional.
-            Buat 1 kalimat formal naratif untuk 'Upaya Tindak Lanjut' laporan bulanan berdasarkan data ini:
-            Komoditi ${komoditi}. Realisasi LTT: ${realisasi} Ha dari Target: ${target} Ha. Kendala Utama: "${kendala}".
-            Fokus pada solusi teknis pertanian dan koordinasi kelompok tani.`;
             const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
-                body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages: [{ role: "user", content: prompt }] })
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer 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` },
+                body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages: [{ role: "user", content: `Buat 1 kalimat formal tindak lanjut LTT karena kendala: ${kendala}.` }] })
             });
             const data = await res.json();
             document.getElementById('in_tindak').value = data.choices[0].message.content.trim();
             sync();
-        } catch (e) { alert("Gagal memanggil AI. Cek koneksi."); } 
-        finally { btn.disabled = false; btn.innerText = "✨ GENERATE AI"; }
+        } catch (e) { alert("AI Gagal."); } finally { btn.disabled = false; btn.innerText = "✨ GENERATE AI"; }
     }
 
     document.getElementById('in_tanggal').valueAsDate = new Date();
     renderInputs();
     sync();
 </script>
-
 </body>
 </html>
