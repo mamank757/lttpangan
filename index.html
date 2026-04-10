@@ -290,8 +290,13 @@
             const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer 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` },
-                body: JSON.stringify({ model: "llama-3.3-70b-versatile", messages: [{ role: "user", content: `Buat 1 kalimat formal tindak lanjut LTT karena kendala: ${kendala}.` }] })
-            });
+               body: JSON.stringify({ 
+    model: "llama-3.3-70b-versatile", 
+    messages: [{ 
+        role: "user", 
+        content: `Tuliskan hanya satu kalimat formal tindak lanjut untuk laporan pertanian berdasarkan kendala ini: ${kendala}. Langsung berikan kalimatnya tanpa kata pengantar, tanpa tanda kutip, dan tanpa penjelasan tambahan.` 
+    }] 
+})
             const data = await res.json();
             document.getElementById('in_tindak').value = data.choices[0].message.content.trim();
             sync();
