@@ -253,8 +253,12 @@
         out('out_nip', val('in_nip'));
         out('out_gol', val('in_gol'));
         out('out_jabatan', val('in_jabatan'));
-        out('out_wilbin', val('in_wilbin'));
-        
+
+        // PENGGABUNGAN WILAYAH & KECAMATAN
+        const desa = val('in_wilbin') || "...";
+        const kec = val('in_kecamatan') || "...";
+        out('out_wilbin', desa + ", Kecamatan " + kec); 
+
         const komo = val('in_komoditi');
         out('out_komoditi', komo);
         document.querySelectorAll('.label-komoditi').forEach(el => el.innerText = komo);
@@ -263,8 +267,7 @@
         out('out_periode', getBulanTahun(tgl));
         
         // UPDATE LOKASI TTD: KECAMATAN + TANGGAL
-        const kecamatan = val('in_kecamatan') || "...";
-        document.getElementById('out_lokasi_tgl').innerText = kecamatan + ", " + formatTanggalIndo(tgl);
+        out('out_lokasi_tgl', kec + ", " + formatTanggalIndo(tgl));
 
         let total = 0;
         document.getElementById('out_table_body').innerHTML = rows.map((row, i) => {
@@ -290,13 +293,14 @@
             const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer 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` },
-               body: JSON.stringify({ 
-    model: "llama-3.3-70b-versatile", 
-    messages: [{ 
-        role: "user", 
-        content: `Tuliskan hanya satu kalimat formal tindak lanjut untuk laporan pertanian berdasarkan kendala ini: ${kendala}. Langsung berikan kalimatnya tanpa kata pengantar, tanpa tanda kutip, dan tanpa penjelasan tambahan.` 
-    }] 
-})
+                body: JSON.stringify({ 
+                    model: "llama-3.3-70b-versatile", 
+                    messages: [{ 
+                        role: "user", 
+                        content: `Tuliskan hanya satu kalimat formal tindak lanjut untuk laporan pertanian berdasarkan kendala ini: ${kendala}. Langsung berikan kalimatnya tanpa kata pengantar, tanpa tanda kutip, dan tanpa penjelasan tambahan.` 
+                    }] 
+                })
+            });
             const data = await res.json();
             document.getElementById('in_tindak').value = data.choices[0].message.content.trim();
             sync();
