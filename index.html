@@ -123,11 +123,11 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             <div class="input-card"><label class="text-xs font-bold text-slate-400 uppercase">Target <span class="label-komoditi">Padi</span> Bulan Ini (Ha)</label><input type="number" id="in_target" oninput="sync()"></div>
-            <div class="input-card col-span-1 md:col-span-2"><label class="text-xs font-bold text-slate-400 uppercase">Kendala Utama</label><textarea id="in_kendala" oninput="sync()"></textarea></div>
+            <div class="input-card col-span-1 md:col-span-2"><label class="text-xs font-bold text-slate-400 uppercase">Kendala Utama (Ditulis manual sesuai kondisi wilayah)</label><textarea id="in_kendala" oninput="sync()"></textarea></div>
         </div>
 
         <div class="input-card relative mb-8">
-            <label class="text-xs font-bold text-purple-400 uppercase">Upaya Tindak Lanjut</label>
+            <label class="text-xs font-bold text-purple-400 uppercase">Tindak Lanjut (Generating AI/tulis manual)</label>
             <button onclick="generateAI()" id="btn-ai" class="absolute top-3 right-3 bg-purple-600 hover:bg-purple-700 text-xs font-bold py-1 px-3 rounded-full transition">✨ GENERATE AI</button>
             <textarea id="in_tindak" oninput="sync()" class="min-h-[100px]"></textarea>
         </div>
