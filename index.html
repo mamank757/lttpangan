@@ -304,6 +304,7 @@
             const data = await res.json();
             document.getElementById('in_tindak').value = data.choices[0].message.content.trim();
             sync();
+             alert("✅ Narasi Laporan Berhasil Dibuat!");
         } catch (e) { alert("AI Gagal."); } finally { btn.disabled = false; btn.innerText = "✨ GENERATE AI"; }
     }
 
