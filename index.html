@@ -305,7 +305,7 @@
             document.getElementById('in_tindak').value = data.choices[0].message.content.trim();
             sync();
              alert("✅ Narasi Laporan Berhasil Dibuat!");
-        } catch (e) { alert("AI Gagal."); } finally { btn.disabled = false; btn.innerText = "✨ GENERATE AI"; }
+        } catch (e) { alert("AI Gagal karena banyak pengguna, silakan coba lagi."); } finally { btn.disabled = false; btn.innerText = "✨ GENERATE AI"; }
     }
 
     document.getElementById('in_tanggal').valueAsDate = new Date();
