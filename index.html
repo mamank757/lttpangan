@@ -28,11 +28,35 @@
         
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
 
+        /* Ubah dimensi min-height agar sesuai F4 di tampilan layar */
+        .page {
+            background: white; 
+            width: 210mm; 
+            min-height: 330mm; /* Sebelumnya 297mm */
+            padding: 20mm 25mm; 
+            margin: 20px auto; 
+            color: black;
+            font-family: 'Times New Roman', Times, serif; 
+            font-size: 11pt; 
+            line-height: 1.5;
+            box-shadow: 0 0 40px rgba(0,0,0,0.5); 
+            position: relative;
+        }
+
         @media print {
-            @page { size: A4; margin: 0; }
+            /* Pengaturan ukuran kertas saat cetak */
+            @page { 
+                size: 210mm 330mm; /* Paksa ukuran F4 */
+                margin: 0; 
+            }
             .no-print { display: none !important; }
             body { background: white; padding: 0; }
-            .page { margin: 0; box-shadow: none; width: 210mm; height: 297mm; }
+            .page { 
+                margin: 0; 
+                box-shadow: none; 
+                width: 210mm; 
+                height: 330mm; /* Pastikan tinggi pas F4 */
+            }
         }
 
         .report-container { width: 100%; display: flex; justify-content: center; }
@@ -284,29 +308,44 @@
         out('out_nip_ttd', val('in_nip'));
     }
 
-    async function generateAI() {
-        const btn = document.getElementById('btn-ai');
-        const kendala = document.getElementById('in_kendala').value;
-        if(!kendala) return alert("Isi kendala dulu.");
-        btn.disabled = true; btn.innerText = "⏳...";
-        try {
-            const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer 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` },
-                body: JSON.stringify({ 
-                    model: "llama-3.3-70b-versatile", 
-                    messages: [{ 
-                        role: "user", 
-                        content: `Tuliskan hanya satu kalimat formal tindak lanjut untuk laporan pertanian berdasarkan kendala ini: ${kendala}. Langsung berikan kalimatnya tanpa kata pengantar, tanpa tanda kutip, dan tanpa penjelasan tambahan.` 
-                    }] 
-                })
-            });
-            const data = await res.json();
-            document.getElementById('in_tindak').value = data.choices[0].message.content.trim();
-            sync();
-             alert("✅ Narasi Laporan Berhasil Dibuat!");
-        } catch (e) { alert("AI Gagal karena banyak pengguna, silakan coba lagi."); } finally { btn.disabled = false; btn.innerText = "✨ GENERATE AI"; }
+   async function generateAI() {
+    const btn = document.getElementById('btn-ai');
+    const kendala = document.getElementById('in_kendala').value;
+    
+    // Validasi input
+    if(!kendala) return alert("Silakan isi bagian 'Kendala Utama' terlebih dahulu.");
+
+    // Loading State
+    btn.disabled = true; 
+    btn.innerText = "⏳ Sedang Berpikir...";
+
+    // --- GANTI URL INI DENGAN URL APPS SCRIPT BAPAK ---
+    const webAppUrl = "https://script.google.com/macros/s/AKfycbxGgH43D62sKiLKd9666pDeY-XLOIeS4-Q_CgO1_NXmh7R8wikpkzPULOuibra_Jzvq/exec"; 
+
+    // Instruksi untuk Gemini agar hasilnya formal dan singkat
+    const instruksi = `Berikan 2 kalimat formal solusi/tindak lanjut penyuluhan pertanian untuk kendala berikut: ${kendala}. Langsung ke inti kalimat tanpa kata pengantar.`;
+
+    try {
+        // Memanggil Google Apps Script Bapak
+        const res = await fetch(webAppUrl + "?prompt=" + encodeURIComponent(instruksi));
+        const data = await res.json();
+        
+        // Mengambil teks dari struktur JSON Gemini
+        const hasilNarasi = data.candidates[0].content.parts[0].text;
+
+        // Masukkan hasil ke Textarea dan sinkronkan tampilan
+        document.getElementById('in_tindak').value = hasilNarasi.trim();
+        sync();
+        
+        alert("✅ Tindak Lanjut Berhasil Dibuat!");
+    } catch (e) {
+        console.error(e);
+        alert("Gagal terhubung ke AI. Pastikan URL Apps Script sudah benar dan Anda sudah melakukan 'New Deployment'.");
+    } finally {
+        btn.disabled = false; 
+        btn.innerText = "✨ GENERATE AI";
     }
+}
 
     document.getElementById('in_tanggal').valueAsDate = new Date();
     renderInputs();
