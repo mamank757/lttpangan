@@ -98,7 +98,7 @@
 <div class="no-print max-w-6xl mx-auto p-4 md:p-6">
     <div class="no-print-area shadow-2xl border-t-4 border-emerald-500">
         <h2 class="text-2xl font-bold text-emerald-400 mb-6 flex items-center gap-3">
-            <i class="fa-solid fa-file-invoice"></i> PPL REPORT GENERATOR - LTT TANAMAN PANGAN
+            <i class="fa-solid fa-file-invoice"></i> FORM LTT TANAMAN PANGAN - GENERATOR AI
         </h2>
         
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
@@ -180,7 +180,7 @@
 
         <div class="input-card relative mb-8">
             <label class="text-xs font-bold text-purple-400 uppercase">Tindak Lanjut (Generating AI/tulis manual)</label>
-            <button onclick="generateAI()" id="btn-ai" class="absolute top-3 right-3 bg-purple-600 hover:bg-purple-700 text-xs font-bold py-1 px-3 rounded-full transition">✨ GENERATE AI</button>
+            <button onclick="generateAI()" id="btn-ai" class="absolute top-3 right-3 bg-purple-600 hover:bg-purple-700 text-xs font-bold py-1 px-3 rounded-full transition">✨ GENERATE NARASI TINDAK LANJUT AI</button>
             <textarea id="in_tindak" oninput="sync()" class="min-h-[100px]"></textarea>
         </div>
 
@@ -197,7 +197,7 @@
             <div class="flex"><span class="w-44">Nama / NIP</span><span>: <span id="out_nama" class="font-bold">-</span> / <span id="out_nip">-</span></span></div>
             <div class="flex"><span class="w-44">Pangkat / Golongan</span><span>: <span id="out_gol">-</span></span></div>
             <div class="flex"><span class="w-44">Jabatan</span><span>: <span id="out_jabatan">-</span></span></div>
-            <div class="flex"><span class="w-44">Wilayah Binaan (Wilbin)</span><span>: <span id="out_wilbin" class="font-bold">-</span></span></div>
+            <div class="flex"><span class="w-44">Wilayah Binaan (WKPP)</span><span>: <span id="out_wilbin" class="font-bold">-</span></span></div>
             <div class="flex"><span class="w-44">Periode</span><span>: <span id="out_periode">-</span></span></div>
             <div class="flex"><span class="w-44">Hasil Kegiatan</span><span>:</span></div>
         </div>
@@ -392,13 +392,13 @@
         document.getElementById('in_tindak').value = hasilNarasi.trim();
         sync();
         
-        alert("✅ Solusi Berhasil Dibuat!");
+        alert("✅ Narasi Tindak Lanjut Berhasil Dibuat oleh AI!");
     } catch (e) {
         console.error(e);
         alert("Waduh, gagal panggil AI: " + e.message);
     } finally {
         btn.disabled = false; 
-        btn.innerText = "✨ GENERATE AI";
+        btn.innerText = "✨ GENERATE Tindak Lanjut oleh AI";
     }
 }
 
