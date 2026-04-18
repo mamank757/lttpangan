@@ -106,10 +106,9 @@
                 <label class="text-xs font-bold text-slate-400 uppercase">Identitas Penyuluh</label>
                 <input type="text" id="in_nama" list="daftar_nama" oninput="updateDataPenyuluh()" placeholder="Pilih atau Ketik Nama">
                 <datalist id="daftar_nama">
-                    <option value="ABDUL RAHMAN, SP">
-                    <option value="A. FATHUR MUH. ISHAQ B, S.ST., M.Si">
+                                       <option value="A. FATHUR MUH. ISHAQ B, S.ST., M.Si">
                     <option value="ANDI LUTHFIAH, SP">
-                    <option value="FITRIYANTI HASNURI, S.TP">
+                 
                     <option value="INDRA YULIANA, S.TP., M.Si.">
                     <option value="MIFTAHUL KHAIR, S.P.">
                     <option value="NURUL FAHMI, S.P.">
@@ -184,7 +183,7 @@
             <textarea id="in_tindak" oninput="sync()" class="min-h-[100px]"></textarea>
         </div>
 
-        <button onclick="window.print()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-4 rounded-xl font-bold text-white shadow-lg transition transform hover:scale-[1.02]">🖨️ CETAK / SIMPAN LAPORAN KE PDF</button>
+        <button onclick="safePrint()" class="w-full bg-emerald-600 hover:bg-emerald-700 py-4 rounded-xl font-bold text-white shadow-lg transition transform hover:scale-[1.02]">🖨️ CETAK / SIMPAN LAPORAN KE PDF</button>
     </div>
 </div>
 
@@ -238,11 +237,13 @@
     function closeWarning() {
     document.getElementById('browser-warning').style.display = 'none';
 }
+// Daftar NIP yang diblokir aksesnya
+const blacklistNIP = ["199409042020122001", "19940904 202012 2 001"];
+
     const dataPenyuluh = {
         "ABDUL RAHMAN, SP": { nip: "199009202020121001", wilayah: "Desa Manurung" },
         "A. FATHUR MUH. ISHAQ B, S.ST., M.Si": { nip: "199604112020121001", wilayah: "Kel. Laelo, Kel. Tempe, Kel. Cempalagi" },
         "ANDI LUTHFIAH, SP": { nip: "199307162020122003", wilayah: "Desa Mannagae & Desa Assorajang" },
-        "FITRIYANTI HASNURI, S.TP": { nip: "199409042020122001", wilayah: "Desa Ongkoe" },
         "INDRA YULIANA, S.TP., M.Si.": { nip: "199307062020122001", wilayah: "Desa Alewadeng" },
         "MIFTAHUL KHAIR, S.P.": { nip: "199311192020122003", wilayah: "Desa Lempa" },
         "NURUL FAHMI, S.P.": { nip: "198911142020122002", wilayah: "Desa Bottobenteng & Desa Rumpia" },
@@ -253,6 +254,7 @@
         "SURAHMAN, S.TP": { nip: "199203122020121003", wilayah: "Desa Barangmamase" },
         "UMAR, SP": { nip: "199408272020121001", wilayah: "Desa Walanga & Desa Raddae" }
     };
+
 
     function updateDataPenyuluh() {
         const nama = document.getElementById("in_nama").value;
@@ -338,8 +340,30 @@
         out('out_nama_ttd', val('in_nama'));
         out('out_nip_ttd', val('in_nip'));
     }
+function safePrint() {
+    const userNIP = document.getElementById('in_nip').value.trim();
 
+    if (!userNIP) {
+        alert("Silakan isi NIP terlebih dahulu.");
+        return;
+    }
+
+    if (blacklistNIP.includes(userNIP)) {
+        alert("❌ AKSES DITOLAK!\nAnda tidak memiliki izin untuk mencetak dokumen ini.");
+        return;
+    }
+
+    window.print();
+}
 async function generateAI() {
+    const userNIP = document.getElementById('in_nip').value.trim();
+
+    // PROTEKSI: Cek apakah NIP terdaftar di Blacklist
+    if (blacklistNIP.includes(userNIP)) {
+        alert("❌ AKSES DITOLAK!\nFitur AI dinonaktifkan untuk NIP Anda.");
+        return;
+    }
+    
     // 1. GUNAKAN LINK WEB APP BAPAK (Hasil Deploy di Apps Script)
     const webAppUrl = "https://script.google.com/macros/s/AKfycbwT9DRaoMB2h8wpjJ2rvyxRO2ED_eHl2enVj07-89l92bXzFa8U4KSrgA2D1NyPyM6m/exec"; 
     
