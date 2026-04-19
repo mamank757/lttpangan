@@ -158,8 +158,25 @@
                 <input type="text" id="in_kecamatan" oninput="sync()" placeholder="Kecamatan (Contoh: Bola)">
                 <input type="text" id="in_wilbin" oninput="sync()" placeholder="Wilayah Binaan (Contoh: Desa Manurung)">
                 
-                <label class="text-xs font-bold text-slate-400 uppercase pt-2 block">Tanggal Laporan (TTD)</label>
-                <input type="date" id="in_tanggal" onchange="sync()">
+                <label class="text-xs font-bold text-slate-400 uppercase pt-2 block">Jenis Laporan & Periode</label>
+<select id="in_tipe_periode" onchange="togglePeriode()">
+    <option value="bulanan">Bulanan</option>
+    <option value="triwulan">Triwulan</option>
+</select>
+
+<div id="wrap_tgl_bulanan">
+    <input type="date" id="in_tanggal" onchange="sync()">
+</div>
+
+<div id="wrap_tgl_triwulan" class="hidden">
+    <select id="in_periode_triwulan" onchange="sync()">
+        <option value="Januari - Maret">Triwulan I (Januari - Maret)</option>
+        <option value="April - Juni">Triwulan II (April - Juni)</option>
+        <option value="Juli - September">Triwulan III (Juli - September)</option>
+        <option value="Oktober - Desember">Triwulan IV (Oktober - Desember)</option>
+    </select>
+    <input type="number" id="in_tahun_triwulan" placeholder="Tahun" value="2026" oninput="sync()">
+</div>
                 
                 <label class="text-xs font-bold text-emerald-400 uppercase pt-2 block">Upload Tanda Tangan (PNG)</label>
                 <input type="file" id="in_ttd" accept="image/png, image/jpeg" onchange="handleTTD(this)">
@@ -302,44 +319,75 @@ const blacklistNIP = ["199409042020122001", "19940904 202012 2 001"];
         }
     }
 
-    function sync() {
-        const val = (id) => document.getElementById(id).value;
-        const out = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text || "-"; };
+    // Fungsi untuk memindah tampilan input Bulanan vs Triwulan
+function togglePeriode() {
+    const tipe = document.getElementById('in_tipe_periode').value;
+    const wrapBulanan = document.getElementById('wrap_tgl_bulanan');
+    const wrapTriwulan = document.getElementById('wrap_tgl_triwulan');
 
-        out('out_nama', val('in_nama'));
-        out('out_nip', val('in_nip'));
-        out('out_gol', val('in_gol'));
-        out('out_jabatan', val('in_jabatan'));
-
-        // PENGGABUNGAN WILAYAH & KECAMATAN
-        const desa = val('in_wilbin') || "...";
-        const kec = val('in_kecamatan') || "...";
-        out('out_wilbin', desa + ", Kecamatan " + kec); 
-
-        const komo = val('in_komoditi');
-        out('out_komoditi', komo);
-        document.querySelectorAll('.label-komoditi').forEach(el => el.innerText = komo);
-        
-        const tgl = val('in_tanggal');
-        out('out_periode', getBulanTahun(tgl));
-        
-        // UPDATE LOKASI TTD: KECAMATAN + TANGGAL
-        out('out_lokasi_tgl', kec + ", " + formatTanggalIndo(tgl));
-
-        let total = 0;
-        document.getElementById('out_table_body').innerHTML = rows.map((row, i) => {
-            total += parseFloat(row.luas || 0);
-            return `<tr><td class="text-center">${i + 1}</td><td>${row.kelompok || '-'}</td><td class="text-center">${row.luas || 0}</td></tr>`;
-        }).join('');
-
-        out('out_total', total + " Ha");
-        out('out_realisasi', total);
-        out('out_target', val('in_target'));
-        out('out_kendala', val('in_kendala'));
-        out('out_tindak', val('in_tindak'));
-        out('out_nama_ttd', val('in_nama'));
-        out('out_nip_ttd', val('in_nip'));
+    if (tipe === 'bulanan') {
+        wrapBulanan.classList.remove('hidden');
+        wrapTriwulan.classList.add('hidden');
+    } else {
+        wrapBulanan.classList.add('hidden');
+        wrapTriwulan.classList.remove('hidden');
     }
+    sync(); // Jalankan sinkronisasi agar tampilan laporan terupdate
+}
+
+// Modifikasi fungsi sync() Anda pada bagian penentuan Periode
+function sync() {
+    const val = (id) => document.getElementById(id).value;
+    const out = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text || "-"; };
+
+    // --- LOGIKA PERIODE BARU ---
+    const tipe = val('in_tipe_periode');
+    let periodeText = "-";
+    let tglFullIndo = "..., ...";
+
+    if (tipe === 'bulanan') {
+        const tgl = val('in_tanggal');
+        periodeText = getBulanTahun(tgl); // Contoh: April 2026
+        tglFullIndo = formatTanggalIndo(tgl);
+    } else {
+        const triwulan = val('in_periode_triwulan');
+        const tahun = val('in_tahun_triwulan');
+        periodeText = triwulan + " " + tahun; // Contoh: Januari - Maret 2026
+        tglFullIndo = tahun; // Untuk triwulan, biasanya TTD hanya mencantumkan tahun atau manual
+    }
+    // ---------------------------
+
+    out('out_nama', val('in_nama'));
+    out('out_nip', val('in_nip'));
+    out('out_gol', val('in_gol'));
+    out('out_jabatan', val('in_jabatan'));
+
+    const desa = val('in_wilbin') || "...";
+    const kec = val('in_kecamatan') || "...";
+    out('out_wilbin', desa + ", Kecamatan " + kec); 
+
+    out('out_komoditi', val('in_komoditi'));
+    document.querySelectorAll('.label-komoditi').forEach(el => el.innerText = val('in_komoditi'));
+    
+    // Tampilkan hasil periode ke laporan
+    out('out_periode', periodeText);
+    out('out_lokasi_tgl', kec + ", " + tglFullIndo);
+
+    // Bagian tabel dan lainnya tetap sama seperti kode lama Anda...
+    let total = 0;
+    document.getElementById('out_table_body').innerHTML = rows.map((row, i) => {
+        total += parseFloat(row.luas || 0);
+        return `<tr><td class="text-center">${i + 1}</td><td>${row.kelompok || '-'}</td><td class="text-center">${row.luas || 0}</td></tr>`;
+    }).join('');
+
+    out('out_total', total + " Ha");
+    out('out_realisasi', total);
+    out('out_target', val('in_target'));
+    out('out_kendala', val('in_kendala'));
+    out('out_tindak', val('in_tindak'));
+    out('out_nama_ttd', val('in_nama'));
+    out('out_nip_ttd', val('in_nip'));
+}
 function safePrint() {
     const userNIP = document.getElementById('in_nip').value.trim();
 
