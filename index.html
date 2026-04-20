@@ -103,7 +103,9 @@
         
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
             <div class="lg:col-span-1 space-y-3">
-                <label class="text-xs font-bold text-slate-400 uppercase">Identitas Penyuluh</label>
+                <label class="text-xs font-bold text-yellow-400 uppercase">Identitas Penyuluh</label>
+
+
                 <input type="text" id="in_nama" list="daftar_nama" oninput="updateDataPenyuluh()" placeholder="Pilih atau Ketik Nama">
                 <datalist id="daftar_nama">
                                        <option value="A. FATHUR MUH. ISHAQ B, S.ST., M.Si">
@@ -150,15 +152,16 @@
                 </select>
 
                 <select id="in_komoditi" onchange="sync()">
+                     <option value="Pangan">-- Pilih Komoditi Pangan --</option>
                     <option value="Padi">Padi</option>
                     <option value="Jagung">Jagung</option>
                     <option value="Kedelai">Kedelai</option>
                 </select>
 
-                <input type="text" id="in_kecamatan" oninput="sync()" placeholder="Kecamatan (Contoh: Bola)">
-                <input type="text" id="in_wilbin" oninput="sync()" placeholder="Wilayah Binaan (Contoh: Desa Manurung)">
+                <input type="text" id="in_kecamatan" oninput="sync()" placeholder="Kecamatan (cth. Bola)">
+                <input type="text" id="in_wilbin" oninput="sync()" placeholder="WKPP (cth. Desa Manurung)">
                 
-                <label class="text-xs font-bold text-slate-400 uppercase pt-2 block">Jenis Laporan & Periode</label>
+                <label class="text-xs font-bold text-yellow-400 uppercase pt-2 block">Pilih Jenis Laporan & Periode</label>
 <select id="in_tipe_periode" onchange="togglePeriode()">
     <option value="bulanan">Bulanan</option>
     <option value="triwulan">Triwulan</option>
@@ -178,12 +181,12 @@
     <input type="number" id="in_tahun_triwulan" placeholder="Tahun" value="2026" oninput="sync()">
 </div>
                 
-                <label class="text-xs font-bold text-emerald-400 uppercase pt-2 block">Upload Tanda Tangan (PNG)</label>
+                <label class="text-xs font-bold text-yellow-400 uppercase pt-2 block">Upload Tanda Tangan Penyuluh (PNG)</label>
                 <input type="file" id="in_ttd" accept="image/png, image/jpeg" onchange="handleTTD(this)">
             </div>
 
             <div class="lg:col-span-3 space-y-4">
-                <label class="text-xs font-bold text-slate-400 uppercase block">Data LTT Kelompok Tani</label>
+                <label class="text-xs font-bold text-yellow-400 uppercase block">Data LTT Kelompok Tani</label>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="input_container"></div>
                 <button onclick="addRow()" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-1.5 rounded-lg text-xs font-bold transition">+ Tambah Kelompok</button>
             </div>
@@ -206,7 +209,7 @@
 
 <div class="report-container">
     <div class="page" id="report">
-        <div class="text-center font-bold underline text-lg mb-1">LAPORAN LUAS TAMBAH TANAM</div>
+        <div class="text-center font-bold text-lg mb-1">LAPORAN LUAS TAMBAH TANAM</div>
         <div class="text-center font-bold mb-8 uppercase">(Komoditi <span id="out_komoditi">Padi</span>)</div>
 
         <div class="space-y-1 mb-8 text-sm">
