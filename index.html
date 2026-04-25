@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/mamank757/laporantriwulan/99a53aa811aa2ca20fd3c0c0ba2194be56d2b5e6/Gemini_Generated_Image_o9onvjo9onvjo9on%20(1)%20(1).png">
     <style>
+    input, select, textarea { margin-top: 4px !important; }
+.input-card { margin-bottom: 0px !important; }
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         
         body { background: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
@@ -84,7 +86,7 @@
             <p><b>Generating</b> Form LTT Pangan dari <b>Mamank.</b> Follow TikTok sy: <b>King Mamank</b>.</p>
             <p class="bg-emerald-500/10 p-4 rounded-xl border border-emerald-500/30 text-sm md:text-base text-emerald-50 text-left">
                 <i class="fa-solid fa-robot mr-2 text-emerald-400"></i> 
-                <b class="text-white"></b> Utk hasil cetak laporan yg optimal, gunakan <b>HP Android</b> atau <b>Laptop</b> dgn browser <b>Google Chrome.</b> Jika Generating AI</b> gagal krn trafik padat. Coba lagi beberapa saat, <b>jangan</b> <i>refresh</i> halaman.
+                <b class="text-white"></b> Utk hasil cetak laporan yg optimal, gunakan <b>HP Android</b> atau <b>Laptop</b> dgn browser <b>Google Chrome.</b> Jika Generating AI gagal krn trafik padat. Coba lagi beberapa saat, <b>jangan</b> <i>refresh</i> halaman.
             </p>
         </div>
 
@@ -94,108 +96,131 @@
     </div>
 </div>
 
-
-<div class="no-print max-w-6xl mx-auto p-4 md:p-6">
-    <div class="no-print-area shadow-2xl border-t-4 border-emerald-500">
-        <h2 class="text-2xl font-bold text-emerald-400 mb-6 flex items-center gap-3">
-            <i class="fa-solid fa-file-invoice"></i> FORM LTT TANAMAN PANGAN - GENERATOR AI
-        </h2>
-        
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
-            <div class="lg:col-span-1 space-y-3">
-                <label class="text-xs font-bold text-yellow-400 uppercase">Identitas Penyuluh</label>
-
-
-                <input type="text" id="in_nama" list="daftar_nama" oninput="updateDataPenyuluh()" placeholder="Pilih atau Ketik Nama">
-                <datalist id="daftar_nama">
-                                       <option value="A. FATHUR MUH. ISHAQ B, S.ST., M.Si">
-                    <option value="ANDI LUTHFIAH, SP">
-                 
-                    <option value="INDRA YULIANA, S.TP., M.Si.">
-                    <option value="MIFTAHUL KHAIR, S.P.">
-                    <option value="NURUL FAHMI, S.P.">
-                    <option value="REZKI RAHAYU, S.P.">
-                    <option value="RIZAL SMITH ANUGRAH SYAM, S.P.">
-                    <option value="SUHADY HAMDAN, S.P.">
-                    <option value="SULFIANITA, S.P.">
-                    <option value="SURAHMAN, S.TP">
-                    <option value="UMAR, SP">
+<div class="no-print-area shadow-2xl border-t-4 border-emerald-500">
+    <h2 class="text-2xl font-bold text-emerald-400 mb-6 flex items-center gap-3">
+        <i class="fa-solid fa-file-invoice"></i> FORM LTT TANAMAN PANGAN - GENERATOR AI
+    </h2>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+<div class="lg:col-span-1 space-y-4">
+    <div>
+        <label class="text-xs font-bold text-yellow-400 uppercase mb-2 block">Identitas Penyuluh</label>
+        <div class="space-y-2">
+            <input type="text" id="in_nama" list="daftar_nama" oninput="updateDataPenyuluh()" placeholder="Pilih atau Ketik Nama" class="m-0">
+            <datalist id="daftar_nama">
+                 <option value="A. FATHUR MUH. ISHAQ B, S.ST., M.Si">
+                        <option value="ANDI LUTHFIAH, SP">
+                        <option value="INDRA YULIANA, S.TP., M.Si.">
+                        <option value="MIFTAHUL KHAIR, S.P.">
+                        <option value="NURUL FAHMI, S.P.">
+                        <option value="REZKI RAHAYU, S.P.">
+                        <option value="RIZAL SMITH ANUGRAH SYAM, S.P.">
+                        <option value="SUHADY HAMDAN, S.P.">
+                        <option value="SULFIANITA, S.P.">
+                        <option value="SURAHMAN, S.TP">
+                        <option value="UMAR, SP">
                 </datalist>
-
-                <input type="text" id="in_nip" oninput="sync()" placeholder="NIP">
-                
-                <select id="in_gol" onchange="sync()">
-                    <option value="">-- Pilih Pangkat/Gol --</option>
-                    <option value="Pengatur Muda (II/a)">Pengatur Muda (II/a)</option>
-                    <option value="Pengatur Muda Tk. I (II/b)">Pengatur Muda Tk. I (II/b)</option>
-                    <option value="Pengatur (II/c)">Pengatur (II/c)</option>
-                    <option value="Pengatur Tk. I (II/d)">Pengatur Tk. I (II/d)</option>
-                    <option value="Penata Muda, III/a">Penata Muda, III/a</option>
-                    <option value="Penata Muda Tk. I, III/b">Penata Muda Tk. I, III/b</option>
-                    <option value="Penata, III/c">Penata, III/c</option>
-                    <option value="Penata Tk. I, III/d">Penata Tk. I, III/d</option>
-                    <option value="Pembina (IV/a)">Pembina (IV/a)</option>
-                    <option value="Pembina Tk. I (IV/b)">Pembina Tk. I (IV/b)</option>
-                    <option value="Pembina Utama Muda (IV/c)">Pembina Utama Muda (IV/c)</option>
-                    <option value="Pembina Utama Madya (IV/d)">Pembina Utama Madya (IV/d)</option>
-                    <option value="Pembina Utama (IV/e)">Pembina Utama (IV/e)</option>
+            <input type="text" id="in_nip" oninput="sync()" placeholder="NIP" class="m-0">
+            
+            <select id="in_gol" onchange="sync()" class="m-0">
+              <option value="">-- Pilih Pangkat --</option>
+                   <option value="Pengatur Muda (II/a)">Pengatur Muda (II/a)</option>
+                   <option value="Pengatur Muda Tk. I (II/b)">Pengatur Muda Tk. I (II/b)</option>
+                   <option value="Pengatur (II/c)">Pengatur (II/c)</option>
+                   <option value="Pengatur Tk. I (II/d)">Pengatur Tk. I (II/d)</option>
+                   <option value="Penata Muda, III/a">Penata Muda, III/a</option>
+                   <option value="Penata Muda Tk. I, III/b">Penata Muda Tk. I, III/b</option>
+                   <option value="Penata, III/c">Penata, III/c</option>
+                   <option value="Penata Tk. I, III/d">Penata Tk. I, III/d</option>
+                   <option value="Pembina (IV/a)">Pembina (IV/a)</option>
+                   <option value="Pembina Tk. I (IV/b)">Pembina Tk. I (IV/b)</option>
+                   <option value="Pembina Utama Muda (IV/c)">Pembina Utama Muda (IV/c)</option>
+                   <option value="Pembina Utama Madya (IV/d)">Pembina Utama Madya (IV/d)</option>
+                   <option value="Pembina Utama (IV/e)">Pembina Utama (IV/e)</option>
                 </select>
 
-                <select id="in_jabatan" onchange="sync()">
-                    <option value="">-- Pilih Jabatan --</option>
-                    <option value="Penyuluh Pertanian Terampil">Penyuluh Pertanian Terampil</option>
-                    <option value="Penyuluh Pertanian Mahir">Penyuluh Pertanian Mahir</option>
-                    <option value="Penyuluh Pertanian Penyelia">Penyuluh Pertanian Penyelia</option>
-                    <option value="Penyuluh Pertanian Ahli Pertama">Penyuluh Pertanian Ahli Pertama</option>
-                    <option value="Penyuluh Pertanian Ahli Muda">Penyuluh Pertanian Ahli Muda</option>
-                    <option value="Penyuluh Pertanian Ahli Madya">Penyuluh Pertanian Ahli Madya</option>
+            <select id="in_jabatan" onchange="sync()" class="m-0">
+                 <option value="">-- Pilih Jabatan --</option>
+                     <option value="Penyuluh Pertanian Pemula">Penyuluh Pertanian Pemula</option>
+                     <option value="Penyuluh Pertanian Terampil">Penyuluh Pertanian Terampil</option>
+                     <option value="Penyuluh Pertanian Mahir">Penyuluh Pertanian Mahir</option>
+                     <option value="Penyuluh Pertanian Penyelia">Penyuluh Pertanian Penyelia</option>
+                     <option value="Penyuluh Pertanian Ahli Pertama">Penyuluh Pertanian Ahli Pertama</option>
+                     <option value="Penyuluh Pertanian Ahli Muda">Penyuluh Pertanian Ahli Muda</option>
+                     <option value="Penyuluh Pertanian Ahli Madya">Penyuluh Pertanian Ahli Madya</option>
+                     <option value="Penyuluh Pertanian Ahli Utama">Penyuluh Pertanian Ahli Utama</option>
                 </select>
+        </div>
+    </div>
 
-                <select id="in_komoditi" onchange="sync()">
-                     <option value="Pangan">-- Pilih Komoditi Pangan --</option>
-                    <option value="Padi">Padi</option>
-                    <option value="Jagung">Jagung</option>
-                    <option value="Kedelai">Kedelai</option>
-                </select>
+    <div>
+        <label class="text-xs font-bold text-yellow-400 uppercase mb-2 block">Lokasi & Komoditi</label>
+        <div class="space-y-2">
+            <select id="in_komoditi" onchange="sync()" class="m-0">
+                <option value="Padi">Padi</option>
+                <option value="Jagung">Jagung</option>
+                <option value="Kedelai">Kedelai</option>
+            </select>
+            <input type="text" id="in_kecamatan" oninput="sync()" placeholder="Kecamatan (cth. Bola)" class="m-0">
+            <input type="text" id="in_wilbin" oninput="sync()" placeholder="WKPP (cth. Desa Manurung)" class="m-0">
+        </div>
+    </div>
 
-                <input type="text" id="in_kecamatan" oninput="sync()" placeholder="Kecamatan (cth. Bola)">
-                <input type="text" id="in_wilbin" oninput="sync()" placeholder="WKPP (cth. Desa Manurung)">
-                
-                <label class="text-xs font-bold text-yellow-400 uppercase pt-2 block">Pilih Jenis Laporan & Periode</label>
-<select id="in_tipe_periode" onchange="togglePeriode()">
-    <option value="bulanan">Bulanan</option>
-    <option value="triwulan">Triwulan</option>
-</select>
+    <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+        <label class="text-xs font-bold text-yellow-400 uppercase block mb-2">Periode Laporan</label>
+        <select id="in_tipe_periode" onchange="togglePeriode()" class="mb-2 !mt-0">
+            <option value="bulanan">Bulanan</option>
+            <option value="triwulan">Triwulan</option>
+        </select>
+        <div id="wrap_tgl_bulanan"><input type="date" id="in_tanggal" onchange="sync()" class="!mt-0"></div>
+        <div id="wrap_tgl_triwulan" class="hidden space-y-2">
+            <select id="in_periode_triwulan" onchange="sync()" class="!mt-0">
+                <option value="Januari - Maret">Triwulan I</option>
+                <option value="April - Juni">Triwulan II</option>
+            </select>
+            <input type="number" id="in_tahun_triwulan" value="2026" oninput="sync()" class="!mt-0">
+        </div>
+    </div>
 
-<div id="wrap_tgl_bulanan">
-    <input type="date" id="in_tanggal" onchange="sync()">
+    <div id="wrap_foto_input" class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+        <label class="text-xs font-bold text-yellow-400 uppercase block mb-2">Upload Foto Kegiatan</label>
+        <input type="file" id="in_foto" accept="image/*" onchange="handleFoto(this)" required
+            class="block w-full text-[10px] text-slate-400
+            file:mr-3 file:py-1 file:px-3
+            file:rounded-full file:border-0
+            file:text-[10px] file:font-semibold
+            file:bg-emerald-600 file:text-white
+            hover:file:bg-emerald-500 cursor:pointer">
+    </div>
+
+    <div>
+        <label class="text-xs font-bold text-yellow-400 uppercase mb-2 block">Tanda Tangan (PNG)</label>
+        <input type="file" id="in_ttd" accept="image/png" onchange="handleTTD(this)" class="text-xs">
+    </div>
 </div>
 
-<div id="wrap_tgl_triwulan" class="hidden">
-    <select id="in_periode_triwulan" onchange="sync()">
-        <option value="Januari - Maret">Triwulan I (Januari - Maret)</option>
-        <option value="April - Juni">Triwulan II (April - Juni)</option>
-        <option value="Juli - September">Triwulan III (Juli - September)</option>
-        <option value="Oktober - Desember">Triwulan IV (Oktober - Desember)</option>
-    </select>
-    <input type="number" id="in_tahun_triwulan" placeholder="Tahun" value="2026" oninput="sync()">
-</div>
-                
-                <label class="text-xs font-bold text-yellow-400 uppercase pt-2 block">Upload Tanda Tangan Penyuluh (PNG)</label>
-                <input type="file" id="in_ttd" accept="image/png, image/jpeg" onchange="handleTTD(this)">
+        <div class="lg:col-span-3">
+            <div class="flex justify-between items-center mb-4">
+                <label class="text-xs font-bold text-yellow-400 uppercase">Data LTT Kelompok Tani</label>
+                <button onclick="addRow()" class="bg-indigo-600 hover:bg-indigo-500 px-3 py-1 rounded-md text-[10px] font-bold transition">
+                    <i class="fa-solid fa-plus mr-1"></i> Tambah Kelompok
+                </button>
             </div>
-
-            <div class="lg:col-span-3 space-y-4">
-                <label class="text-xs font-bold text-yellow-400 uppercase block">Data LTT Kelompok Tani</label>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="input_container"></div>
-                <button onclick="addRow()" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-1.5 rounded-lg text-xs font-bold transition">+ Tambah Kelompok</button>
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="input_container">
+                </div>
         </div>
+    </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="input-card"><label class="text-xs font-bold text-slate-400 uppercase">Target <span class="label-komoditi">Padi</span> Bulan Ini (Ha)</label><input type="number" id="in_target" oninput="sync()"></div>
-            <div class="input-card col-span-1 md:col-span-2"><label class="text-xs font-bold text-slate-400 uppercase">Kendala Utama (Ditulis manual sesuai kondisi wilayah)</label><textarea id="in_kendala" oninput="sync()"></textarea></div>
+   
+        <div class="input-card">
+            <label class="text-xs font-bold text-slate-400 uppercase">Target LTT (Ha)</label>
+            <input type="number" id="in_target" oninput="sync()" placeholder="0">
         </div>
+        <div class="input-card">
+            <label class="text-xs font-bold text-slate-400 uppercase">Kendala Utama</label>
+            <textarea id="in_kendala" oninput="sync()" placeholder="Tulis kendala di lapangan..."></textarea>
+        </div>
+    </div>
 
         <div class="input-card relative mb-8">
             <label class="text-xs font-bold text-purple-400 uppercase">Tindak Lanjut (Generating AI/tulis manual)</label>
@@ -238,6 +263,16 @@
             <tr class="border-none"><td class="border-none p-1">• Kendala utama</td><td class="border-none p-1 text-justify">: <span id="out_kendala">-</span></td></tr>
             <tr class="border-none"><td class="border-none p-1">• Upaya tindak lanjut</td><td class="border-none p-1 text-justify">: <span id="out_tindak" class="normal">Menunggu input...</span></td></tr>
         </table>
+
+<div class="mt-6">
+    <div class="font-bold text-sm mb-2">Dokumentasi Kegiatan:</div>
+    <div class="w-full border border-gray-300 rounded-lg p-2 flex justify-center bg-gray-50">
+        <img id="out_foto_img" src="" class="hidden max-h-[250px] w-auto object-contain shadow-sm">
+        <div id="foto_placeholder" class="text-gray-400 italic text-xs py-10 text-center">
+            (Belum ada foto kegiatan yang diupload)
+        </div>
+    </div>
+</div>
 
         <div class="mt-16 flex justify-end">
             <div class="text-center sig-container">
@@ -313,6 +348,22 @@ const blacklistNIP = ["199409042020122001", "19940904 202012 2 001"];
         `).join('');
     }
 
+// Fungsi untuk memproses foto kegiatan
+function handleFoto(input) {
+    const img = document.getElementById('out_foto_img');
+    const placeholder = document.getElementById('foto_placeholder');
+    
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => { 
+            img.src = e.target.result; 
+            img.classList.remove('hidden'); 
+            placeholder.classList.add('hidden');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
     function handleTTD(input) {
         const img = document.getElementById('out_ttd_img');
         if (input.files && input.files[0]) {
@@ -327,15 +378,21 @@ function togglePeriode() {
     const tipe = document.getElementById('in_tipe_periode').value;
     const wrapBulanan = document.getElementById('wrap_tgl_bulanan');
     const wrapTriwulan = document.getElementById('wrap_tgl_triwulan');
+    const wrapFoto = document.getElementById('wrap_foto_input'); // Ambil element wrapper foto
+    const outFotoSection = document.querySelector('.mt-6'); // Bagian tampilan foto di laporan
 
     if (tipe === 'bulanan') {
         wrapBulanan.classList.remove('hidden');
         wrapTriwulan.classList.add('hidden');
+        wrapFoto.classList.remove('hidden'); // Tampilkan input foto
+        if(outFotoSection) outFotoSection.classList.remove('hidden'); // Tampilkan di laporan
     } else {
         wrapBulanan.classList.add('hidden');
         wrapTriwulan.classList.remove('hidden');
+        wrapFoto.classList.add('hidden'); // Sembunyikan input foto
+        if(outFotoSection) outFotoSection.classList.add('hidden'); // Sembunyikan di laporan
     }
-    sync(); // Jalankan sinkronisasi agar tampilan laporan terupdate
+    sync();
 }
 
 // Modifikasi fungsi sync() Anda pada bagian penentuan Periode
@@ -393,9 +450,16 @@ function sync() {
 }
 function safePrint() {
     const userNIP = document.getElementById('in_nip').value.trim();
+const fotoInput = document.getElementById('in_foto');
+const tipePeriode = document.getElementById('in_tipe_periode').value;
 
     if (!userNIP) {
         alert("Silakan isi NIP terlebih dahulu.");
+        return;
+    }
+
+if (fotoInput.files.length === 0) {
+        alert("⚠️ FOTO KEGIATAN WAJIB DIUPLOAD!\nMohon lampirkan foto dokumentasi sebelum mencetak.");
         return;
     }
 
