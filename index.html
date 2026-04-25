@@ -46,26 +46,35 @@
             position: relative;
         }
 
-       @media print {
-    /* Sembunyikan seluruh area input */
-    .no-print-area, 
-    #browser-warning, 
-    button, 
-    .no-print { 
-        display: none !important; 
+ /* Tambahkan atau perbarui di dalam tag <style> */
+@media print {
+    /* Mencegah tanda tangan terpotong di tengah (pindah blok utuh) */
+    .sig-section {
+        page-break-inside: avoid;
+        break-inside: avoid;
+        display: block;
+        margin-top: 20px;
     }
 
-    /* Paksa body tidak memiliki background agar bersih */
-    body { 
-        background: white !important; 
-    }
-
-    /* Hilangkan margin otomatis browser agar tidak terpotong */
+    /* Memastikan margin tetap konsisten di halaman baru */
     .page {
         margin: 0 !important;
-        border: none !important;
+        padding: 20mm 25mm !important; /* Pastikan margin print sama dengan desain */
+        height: auto !important;
+        min-height: 0 !important;
         box-shadow: none !important;
     }
+
+    /* Force page break jika diperlukan sebelum tanda tangan */
+    .force-break {
+        page-break-before: always;
+        break-before: page;
+    }
+}
+
+/* Tambahan agar tampilan di layar tetap rapi */
+.sig-section {
+    margin-top: 30px;
 }
 
         .report-container { width: 100%; display: flex; justify-content: center; }
@@ -128,17 +137,32 @@
                     </datalist>
                     <input type="text" id="in_nip" oninput="sync()" placeholder="NIP" class="m-0">
                     <select id="in_gol" onchange="sync()" class="m-0">
-                        <option value="">-- Pilih Pangkat --</option>
-                        <option value="Penata Muda, III/a">Penata Muda, III/a</option>
-                        <option value="Penata, III/c">Penata, III/c</option>
-                        <option value="Pembina (IV/a)">Pembina (IV/a)</option>
-                    </select>
+                          <option value="">-- Pilih Pangkat --</option>
+                   <option value="Pengatur Muda (II/a)">Pengatur Muda (II/a)</option>
+                   <option value="Pengatur Muda Tk. I (II/b)">Pengatur Muda Tk. I (II/b)</option>
+                   <option value="Pengatur (II/c)">Pengatur (II/c)</option>
+                   <option value="Pengatur Tk. I (II/d)">Pengatur Tk. I (II/d)</option>
+                   <option value="Penata Muda, III/a">Penata Muda, III/a</option>
+                   <option value="Penata Muda Tk. I, III/b">Penata Muda Tk. I, III/b</option>
+                   <option value="Penata, III/c">Penata, III/c</option>
+                   <option value="Penata Tk. I, III/d">Penata Tk. I, III/d</option>
+                   <option value="Pembina (IV/a)">Pembina (IV/a)</option>
+                   <option value="Pembina Tk. I (IV/b)">Pembina Tk. I (IV/b)</option>
+                   <option value="Pembina Utama Muda (IV/c)">Pembina Utama Muda (IV/c)</option>
+                   <option value="Pembina Utama Madya (IV/d)">Pembina Utama Madya (IV/d)</option>
+                   <option value="Pembina Utama (IV/e)">Pembina Utama (IV/e)</option>
+                                   </select>
                     <select id="in_jabatan" onchange="sync()" class="m-0">
-                        <option value="">-- Pilih Jabatan --</option>
-                        <option value="Penyuluh Pertanian Ahli Pertama">Penyuluh Pertanian Ahli Pertama</option>
-                        <option value="Penyuluh Pertanian Ahli Muda">Penyuluh Pertanian Ahli Muda</option>
-                        <option value="Penyuluh Pertanian Ahli Madya">Penyuluh Pertanian Ahli Madya</option>
-                    </select>
+                         <option value="">-- Pilih Jabatan --</option>
+                     <option value="Penyuluh Pertanian Pemula">Penyuluh Pertanian Pemula</option>
+                     <option value="Penyuluh Pertanian Terampil">Penyuluh Pertanian Terampil</option>
+                     <option value="Penyuluh Pertanian Mahir">Penyuluh Pertanian Mahir</option>
+                     <option value="Penyuluh Pertanian Penyelia">Penyuluh Pertanian Penyelia</option>
+                     <option value="Penyuluh Pertanian Ahli Pertama">Penyuluh Pertanian Ahli Pertama</option>
+                     <option value="Penyuluh Pertanian Ahli Muda">Penyuluh Pertanian Ahli Muda</option>
+                     <option value="Penyuluh Pertanian Ahli Madya">Penyuluh Pertanian Ahli Madya</option>
+                     <option value="Penyuluh Pertanian Ahli Utama">Penyuluh Pertanian Ahli Utama</option>
+                </select>
                 </div>
             </div>
 
@@ -258,16 +282,16 @@
     </div>
 </div>
 
-        <div class="mt-16 flex justify-end">
-            <div class="text-center sig-container">
-                <span id="out_lokasi_tgl">..., ...</span><br>
-                Penyuluh Pertanian,
-                <div class="h-20 flex items-center justify-center relative">
-                    <img id="out_ttd_img" src="" class="img-ttd hidden">
-                </div>
-                <div class="sig-name" id="out_nama_ttd">-</div>
-                NIP. <span id="out_nip_ttd"></span>
+       <div class="sig-section">
+    <div class="flex justify-end">
+        <div class="text-center sig-container">
+            <span id="out_lokasi_tgl">..., ...</span><br>
+            Penyuluh Pertanian,
+            <div class="h-20 flex items-center justify-center relative">
+                <img id="out_ttd_img" src="" class="img-ttd hidden">
             </div>
+            <div class="sig-name" id="out_nama_ttd">-</div>
+            NIP. <span id="out_nip_ttd"></span>
         </div>
     </div>
 </div>
