@@ -47,7 +47,23 @@
         }
 
  /* Tambahkan atau perbarui di dalam tag <style> */
+/* Tambahkan atau perbarui di dalam tag <style> */
 @media print {
+    /* SEMBUNYIKAN AREA INPUT DAN WARNING SAAT CETAK */
+    .no-print-area, 
+    #browser-warning, 
+    #btn-ai, 
+    button, 
+    .no-print {
+        display: none !important;
+    }
+
+    /* Memastikan body tidak memiliki background warna saat cetak */
+    body {
+        background: white !important;
+        color: black !important;
+    }
+
     /* Mencegah tanda tangan terpotong di tengah (pindah blok utuh) */
     .sig-section {
         page-break-inside: avoid;
@@ -59,16 +75,10 @@
     /* Memastikan margin tetap konsisten di halaman baru */
     .page {
         margin: 0 !important;
-        padding: 20mm 25mm !important; /* Pastikan margin print sama dengan desain */
-        height: auto !important;
-        min-height: 0 !important;
+        padding: 15mm 20mm !important; /* Sesuaikan margin kertas */
+        width: 100% !important;
         box-shadow: none !important;
-    }
-
-    /* Force page break jika diperlukan sebelum tanda tangan */
-    .force-break {
-        page-break-before: always;
-        break-before: page;
+        border: none !important;
     }
 }
 
