@@ -210,8 +210,39 @@
                 <input type="file" id="in_foto" accept="image/*" onchange="handleFoto(this)" required
                     class="block w-full text-[10px] text-slate-400 file:mr-3 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-[10px] file:bg-emerald-600 file:text-white">
             </div>
+            
+            <div class="bg-slate-700/40 border border-slate-600 rounded-lg p-3 flex items-center justify-between">
+    
+    <div class="flex items-center gap-2">
+        <i class="fa-solid fa-user-check text-emerald-400 text-sm"></i>
+        <span class="text-xs text-slate-200 font-semibold">
+            TTD Koordinator
+        </span>
+    </div>
 
-            <div>
+    <label class="relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" id="toggle_kor" onchange="toggleKoordinator()" class="sr-only peer" checked>
+        
+        <div class="w-10 h-5 bg-slate-500 rounded-full peer 
+                    peer-checked:bg-emerald-500 
+                    after:content-[''] after:absolute after:top-0.5 after:left-[2px]
+                    after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all
+                    peer-checked:after:translate-x-5">
+        </div>
+    </label>
+
+</div>
+<div id="wrap_kor">
+    <label>Nama Koordinator</label>
+    <input type="text" id="in_nama_kor" oninput="sync()">
+
+    <label>NIP Koordinator</label>
+    <input type="text" id="in_nip_kor" oninput="sync()">
+
+    <label>Tanda Tangan Koordinator (PNG)</label>
+    <input type="file" id="in_ttd_kor" accept="image/png" onchange="handleTTDKor(this)">
+</div>
+<div>
                 <label class="text-xs font-bold text-yellow-400 uppercase mb-2 block">Tanda Tangan (PNG)</label>
                 <input type="file" id="in_ttd" accept="image/png" onchange="handleTTD(this)" class="text-xs">
             </div>
@@ -292,8 +323,21 @@
     </div>
 </div>
 
-       <div class="sig-section">
-    <div class="flex justify-end">
+     <div class="sig-section">
+    <div class="flex justify-between">
+
+        <!-- KOORDINATOR -->
+        <div class="text-center sig-container" id="out_kor_section">
+    Mengetahui,<br>
+    Koordinator Penyuluh
+    <div class="h-20 flex items-center justify-center relative">
+        <img id="out_ttd_kor_img" src="" class="img-ttd hidden">
+    </div>
+    <div class="sig-name" id="out_nama_kor">-</div>
+    NIP. <span id="out_nip_kor"></span>
+</div>
+
+        <!-- PENYULUH -->
         <div class="text-center sig-container">
             <span id="out_lokasi_tgl">..., ...</span><br>
             Penyuluh Pertanian,
@@ -303,6 +347,7 @@
             <div class="sig-name" id="out_nama_ttd">-</div>
             NIP. <span id="out_nip_ttd"></span>
         </div>
+
     </div>
 </div>
 
@@ -366,6 +411,16 @@ const blacklistNIP = ["199409042020122001", "19940904 202012 2 001"];
         `).join('');
     }
 
+function toggleKoordinator() {
+    const checked = document.getElementById('toggle_kor').checked;
+
+    // Input
+    document.getElementById('wrap_kor').style.display = checked ? 'block' : 'none';
+
+    // Output laporan
+    document.getElementById('out_kor_section').style.display = checked ? 'block' : 'none';
+}
+
 // Fungsi untuk memproses foto kegiatan
 function handleFoto(input) {
     const img = document.getElementById('out_foto_img');
@@ -391,6 +446,17 @@ function handleFoto(input) {
         }
     }
 
+function handleTTDKor(input) {
+    const img = document.getElementById('out_ttd_kor_img');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => { 
+            img.src = e.target.result; 
+            img.classList.remove('hidden'); 
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
     // Fungsi untuk memindah tampilan input Bulanan vs Triwulan
 function togglePeriode() {
     const tipe = document.getElementById('in_tipe_periode').value;
@@ -465,6 +531,8 @@ function sync() {
     out('out_tindak', val('in_tindak'));
     out('out_nama_ttd', val('in_nama'));
     out('out_nip_ttd', val('in_nip'));
+    out('out_nama_kor', val('in_nama_kor'));
+out('out_nip_kor', val('in_nip_kor'));
 }
 function safePrint() {
     const userNIP = document.getElementById('in_nip').value.trim();
@@ -556,6 +624,7 @@ async function generateAI() {
 // Inisialisasi tampilan awal
     window.onload = function() {
         renderInputs();
+        toggleKoordinator();
         updateDataPenyuluh(); // Ini akan otomatis mengisi NIP & Wilbin jika input Nama sudah ada isinya
         sync();
     };
