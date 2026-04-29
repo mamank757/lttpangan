@@ -550,7 +550,7 @@ if (fotoInput.files.length === 0) {
     }
 
     if (blacklistNIP.includes(userNIP)) {
-        alert("❌ AKSES DITOLAK!\nAnda tidak memiliki izin untuk mencetak dokumen ini.");
+        alert("❌ AKSES ANDA DITOLAK!\nAnda tidak memiliki izin untuk mencetak dokumen ini.");
         return;
     }
 
@@ -561,7 +561,7 @@ async function generateAI() {
 
     // PROTEKSI: Cek apakah NIP terdaftar di Blacklist
     if (blacklistNIP.includes(userNIP)) {
-        alert("❌ AKSES DITOLAK!");
+        alert("❌ AKSES ANDA DITOLAK!");
         return;
     }
     
@@ -615,7 +615,7 @@ async function generateAI() {
 
     } catch (e) {
         console.error(e);
-        alert("Error: " + e.message + "\n\nPastikan Web App sudah di-Deploy sebagai 'Anyone'.");
+        alert("Error: " + e.message + "\n\nCoba lagi nanti atau Hubungi Admin.");
     } finally {
         btn.disabled = false; 
         btn.innerText = "✨ GENERATE NARASI TINDAK LANJUT OLEH AI";
