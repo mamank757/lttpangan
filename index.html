@@ -8,90 +8,149 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/mamank757/laporantriwulan/99a53aa811aa2ca20fd3c0c0ba2194be56d2b5e6/Gemini_Generated_Image_o9onvjo9onvjo9on%20(1)%20(1).png">
     <style>
-    input, select, textarea { margin-top: 4px !important; }
-.input-card { margin-bottom: 0px !important; }
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        
-        body { background: #0f172a; color: #f1f5f9; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        
-        .page {
-            background: white; width: 210mm; min-height: 297mm;
-            padding: 20mm 25mm; margin: 20px auto; color: black;
-            font-family: 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.5;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5); position: relative;
-        }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 5px; }
-        th, td { border: 1px solid black; padding: 1px 10px; text-align: left; }
-        th { background-color: #f3f4f6; font-weight: bold; text-align: center; }
-
-        .no-print-area { background: #1e293b; border-radius: 15px; padding: 25px; margin-bottom: 30px; border: 1px solid #334155; }
-        .input-card { background: #334155; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
-        textarea, select, input { width: 100%; background: #0f172a; border: 1px solid #475569; color: white; padding: 8px; border-radius: 6px; margin-top: 8px; font-size: 13px; }
-        
-        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
-
-        /* Ubah dimensi min-height agar sesuai F4 di tampilan layar */
-        .page {
-            background: white; 
-            width: 210mm; 
-            min-height: 330mm; /* Sebelumnya 297mm */
-            padding: 20mm 25mm; 
-            margin: 20px auto; 
-            color: black;
-            font-family: 'Times New Roman', Times, serif; 
-            font-size: 11pt; 
-            line-height: 1.5;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5); 
-            position: relative;
-        }
-
- /* Tambahkan atau perbarui di dalam tag <style> */
-/* Tambahkan atau perbarui di dalam tag <style> */
-@media print {
-    /* SEMBUNYIKAN AREA INPUT DAN WARNING SAAT CETAK */
-    .no-print-area, 
-    #browser-warning, 
-    #btn-ai, 
-    button, 
-    .no-print {
-        display: none !important;
+    /* 1. RESET & FONT DASAR */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    
+    body { 
+        background: #0f172a; 
+        color: #f1f5f9; 
+        font-family: 'Inter', sans-serif; 
+        margin: 0; 
+        padding: 0; 
     }
 
-    /* Memastikan body tidak memiliki background warna saat cetak */
-    body {
-        background: white !important;
-        color: black !important;
+    /* 2. STYLE AREA INPUT (NON-PRINT) */
+    .no-print-area { 
+        background: #1e293b; 
+        border-radius: 15px; 
+        padding: 25px; 
+        margin-bottom: 30px; 
+        border: 1px solid #334155; 
+    }
+    .input-card { 
+        background: #334155; 
+        padding: 15px; 
+        border-radius: 10px; 
+        margin-bottom: 0px !important; 
+    }
+    textarea, select, input { 
+        width: 100%; 
+        background: #0f172a; 
+        border: 1px solid #475569; 
+        color: white; 
+        padding: 8px; 
+        border-radius: 6px; 
+        margin-top: 4px !important; 
+        font-size: 13px; 
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator { 
+        filter: invert(1); 
     }
 
-    /* Mencegah tanda tangan terpotong di tengah (pindah blok utuh) */
-    .sig-section {
-        page-break-inside: avoid;
-        break-inside: avoid;
-        display: block;
-        margin-top: 20px;
+    /* 3. STYLE HALAMAN LAPORAN (VIEW MODE & PRINT DASAR) */
+    .report-container { 
+        width: 100%; 
+        display: flex; 
+        justify-content: center; 
     }
-
-    /* Memastikan margin tetap konsisten di halaman baru */
     .page {
-        margin: 0 !important;
-        padding: 15mm 20mm !important; /* Sesuaikan margin kertas */
-        width: 100% !important;
-        box-shadow: none !important;
-        border: none !important;
+        background: white; 
+        width: 210mm; 
+        min-height: 330mm; /* Standar Panjang F4 */
+        padding: 20mm 25mm; 
+        margin: 20px auto; 
+        color: black;
+        font-family: 'Times New Roman', Times, serif; 
+        font-size: 11pt; 
+        line-height: 1.5;
+        box-shadow: 0 0 40px rgba(0,0,0,0.5); 
+        position: relative;
     }
-}
+    table { 
+        width: 100%; 
+        border-collapse: collapse; 
+        margin-top: 5px; 
+    }
+    th, td { 
+        border: 1px solid black; 
+        padding: 1px 10px; 
+        text-align: left; 
+    }
+    th { 
+        background-color: #f3f4f6; 
+        font-weight: bold; 
+        text-align: center; 
+    }
 
-/* Tambahan agar tampilan di layar tetap rapi */
-.sig-section {
-    margin-top: 30px;
-}
+    /* 4. STYLE TANDA TANGAN & LAMPIRAN */
+    .sig-section { 
+        margin-top: 30px; 
+    }
+    .sig-container { 
+        position: relative; 
+        display: inline-block; 
+        text-align: center; 
+        margin-top: 10px; 
+    }
+    .img-ttd { 
+        position: absolute; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        bottom: -10px; 
+        max-height: 80px; 
+        width: auto; 
+        z-index: 10; 
+        mix-blend-mode: multiply; 
+    }
+    .sig-name { 
+        position: relative; 
+        z-index: 5; 
+        font-weight: bold; 
+        text-decoration: underline; 
+           }
+    .lampiran-title {
+        text-align: center;
+        font-weight: bold;
+        text-decoration: underline;
+        margin-bottom: 25px;
+        font-size: 12pt;
+    }
+    #out_foto_img {
+        max-width: 100%;
+        max-height: 16cm;
+        object-fit: contain;
+        border: 1px solid #000;
+    }
 
-        .report-container { width: 100%; display: flex; justify-content: center; }
-        .sig-container { position: relative; display: inline-block; text-align: center; margin-top: 10px; }
-        .img-ttd { position: absolute; left: 50%; transform: translateX(-50%); bottom: -10px; max-height: 80px; width: auto; z-index: 10; mix-blend-mode: multiply; }
-        .sig-name { position: relative; z-index: 5; font-weight: bold; text-decoration: underline; text-transform: uppercase; }
-    </style>
+    /* 5. PENGATURAN KHUSUS CETAK */
+    @media print {
+        body { 
+            background: white !important; 
+            color: black !important; 
+        }
+        .no-print-area, #browser-warning, #btn-ai, button, .no-print { 
+            display: none !important; 
+        }
+        .page { 
+            margin: 0 !important; 
+            padding: 15mm 20mm !important; 
+            width: 100% !important; 
+            box-shadow: none !important; 
+            border: none !important; 
+        }
+        .dokumentasi-wrap { 
+            page-break-before: always; 
+            display: block !important; 
+            width: 100%; 
+            padding-top: 15mm; 
+        }
+        .sig-section { 
+            page-break-inside: avoid; 
+            break-inside: avoid; 
+            display: block;
+        }
+    }
+</style>
 </head>
 <body>
 <div id="browser-warning" class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-900/90 backdrop-blur-md no-print p-4">
@@ -253,17 +312,17 @@
 
 </div>
 <div id="wrap_kor">
-    <label class="text-xs font-bold text-yellow-400 uppercase mb-2 block">Nama koordinator</label>
+    <label class="text-xs font-bold text-yellow-400 mb-2 block">Nama koordinator</label>
     <input type="text" id="in_nama_kor" oninput="sync()">
 
-     <label class="text-xs font-bold text-yellow-400 uppercase mb-2 block">NIP Koordinator</label>
+     <label class="text-xs font-bold text-yellow-400 mb-2 block">NIP Koordinator</label>
     <input type="text" id="in_nip_kor" oninput="sync()">
 
-    <label class="text-xs font-bold text-yellow-400 uppercase mb-2 block">Tanda Tangan Koordinator (PNG)</label>
+    <label class="text-xs font-bold text-yellow-400 mb-2 block">Tanda Tangan Koordinator (PNG)</label>
     <input type="file" id="in_ttd_kor" accept="image/*" onchange="handleTTDKor(this)">
 </div>
 <div>
-                <label class="text-xs font-bold text-yellow-400 uppercase mb-2 block">Tanda Tangan Penyuluh (PNG)</label>
+                <label class="text-xs font-bold text-yellow-400 mb-2 block">Tanda Tangan Penyuluh (PNG)</label>
                 <input type="file" id="in_ttd" accept="image/*" onchange="handleTTD(this)" class="text-xs">
             </div>
         </div>
@@ -333,29 +392,20 @@
             <tr class="border-none"><td class="border-none p-1">• Upaya tindak lanjut</td><td class="border-none p-1 text-justify">: <span id="out_tindak" class="normal">Menunggu input...</span></td></tr>
         </table>
 
-<div class="mt-6">
-    <div class="font-bold text-sm mb-2">Dokumentasi Kegiatan:</div>
-    <div class="w-full border border-gray-300 rounded-lg p-2 flex justify-center bg-gray-50">
-        <img id="out_foto_img" src="" class="hidden max-h-[250px] w-auto object-contain shadow-sm">
-        <div id="foto_placeholder" class="text-gray-400 italic text-xs py-10 text-center">
-            (Belum ada foto kegiatan yang diupload)
-        </div>
-    </div>
-</div>
 
-     <div class="sig-section">
+     <!-- BAGIAN PENGESAHAN (TETAP DI HALAMAN 1) -->
+<div class="sig-section mb-10">
     <div class="flex justify-between">
-
         <!-- KOORDINATOR -->
         <div class="text-center sig-container" id="out_kor_section">
-    Mengetahui,<br>
-    Koordinator Penyuluh
-    <div class="h-20 flex items-center justify-center relative">
-        <img id="out_ttd_kor_img" src="" class="img-ttd hidden">
-    </div>
-    <div class="sig-name" id="out_nama_kor">-</div>
-    NIP. <span id="out_nip_kor"></span>
-</div>
+            Mengetahui,<br>
+            Koordinator Penyuluh
+            <div class="h-20 flex items-center justify-center relative">
+                <img id="out_ttd_kor_img" src="" class="img-ttd hidden">
+            </div>
+            <div class="sig-name" id="out_nama_kor">-</div>
+            NIP. <span id="out_nip_kor"></span>
+        </div>
 
         <!-- PENYULUH -->
         <div class="text-center sig-container">
@@ -367,7 +417,22 @@
             <div class="sig-name" id="out_nama_ttd">-</div>
             NIP. <span id="out_nip_ttd"></span>
         </div>
+    </div>
+</div>
 
+<!-- LAMPIRAN FOTO (OTOMATIS PINDAH KE HALAMAN 2 SAAT DICETAK) -->
+<div id="section_dokumentasi" class="dokumentasi-wrap">
+    <div class="lampiran-title">LAMPIRAN FOTO KEGIATAN</div>
+    <div class="w-full flex justify-center bg-gray-50 border border-gray-300 rounded-lg p-4">
+        <img id="out_foto_img" src="" class="hidden shadow-md">
+        <div id="foto_placeholder" class="text-gray-400 italic text-xs py-20 text-center">
+            (Belum ada foto kegiatan yang diupload)
+        </div>
+    </div>
+    <!-- Keterangan Foto Otomatis -->
+    <div class="text-center font-bold mt-6 text-sm">
+        Dokumentasi LTT <span class="label-komoditi"></span> <br>
+        Periode: <span id="out_periode_lampiran">-</span>
     </div>
 </div>
 
@@ -504,55 +569,66 @@ function sync() {
     const val = (id) => document.getElementById(id).value;
     const out = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text || "-"; };
 
-    // --- LOGIKA PERIODE BARU ---
+    // 1. Logika Periode Laporan
     const tipe = val('in_tipe_periode');
     let periodeText = "-";
     let tglFullIndo = "..., ...";
 
     if (tipe === 'bulanan') {
         const tgl = val('in_tanggal');
-        periodeText = getBulanTahun(tgl); // Contoh: April 2026
+        periodeText = getBulanTahun(tgl); 
         tglFullIndo = formatTanggalIndo(tgl);
     } else {
         const triwulan = val('in_periode_triwulan');
         const tahun = val('in_tahun_triwulan');
-        periodeText = triwulan + " " + tahun; // Contoh: Januari - Maret 2026
-        tglFullIndo = tahun; // Untuk triwulan, biasanya TTD hanya mencantumkan tahun atau manual
+        periodeText = triwulan + " " + tahun;
+        tglFullIndo = tahun; 
     }
-    // ---------------------------
 
+    // 2. Identitas Penyuluh & TTD
     out('out_nama', val('in_nama'));
     out('out_nip', val('in_nip'));
     out('out_gol', val('in_gol'));
     out('out_jabatan', val('in_jabatan'));
+    out('out_nama_ttd', val('in_nama'));
+    out('out_nip_ttd', val('in_nip'));
 
+    // 3. Wilayah Binaan & Komoditi
     const desa = val('in_wilbin') || "...";
     const kec = val('in_kecamatan') || "...";
     out('out_wilbin', desa + ", Kecamatan " + kec); 
-
     out('out_komoditi', val('in_komoditi'));
     document.querySelectorAll('.label-komoditi').forEach(el => el.innerText = val('in_komoditi'));
     
-    // Tampilkan hasil periode ke laporan
+    // 4. Sinkronisasi Periode Laporan & Lampiran Halaman 2
     out('out_periode', periodeText);
+    out('out_periode_lampiran', periodeText);
     out('out_lokasi_tgl', kec + ", " + tglFullIndo);
 
-    // Bagian tabel dan lainnya tetap sama seperti kode lama Anda...
+    // 5. Update Tabel Luas Tambah Tanam
     let total = 0;
-    document.getElementById('out_table_body').innerHTML = rows.map((row, i) => {
-        total += parseFloat(row.luas || 0);
-        return `<tr><td class="text-center">${i + 1}</td><td>${row.kelompok || '-'}</td><td class="text-center">${row.luas || 0}</td></tr>`;
-    }).join('');
+    const tableBody = document.getElementById('out_table_body');
+    if (tableBody) {
+        tableBody.innerHTML = rows.map((row, i) => {
+            total += parseFloat(row.luas || 0);
+            return `<tr><td class="text-center">${i + 1}</td><td>${row.kelompok || '-'}</td><td class="text-center">${row.luas || 0} Ha</td></tr>`;
+        }).join('');
+    }
 
+    // 6. Ringkasan & Identitas Koordinator
     out('out_total', total + " Ha");
     out('out_realisasi', total);
     out('out_target', val('in_target'));
     out('out_kendala', val('in_kendala'));
     out('out_tindak', val('in_tindak'));
-    out('out_nama_ttd', val('in_nama'));
-    out('out_nip_ttd', val('in_nip'));
     out('out_nama_kor', val('in_nama_kor'));
-out('out_nip_kor', val('in_nip_kor'));
+    out('out_nip_kor', val('in_nip_kor'));
+
+    // 7. Kontrol Tampilan Halaman Dokumentasi
+    const wrapDok = document.getElementById('section_dokumentasi');
+    if (wrapDok) {
+        wrapDok.style.display = (tipe === 'bulanan') ? 'block' : 'none';
+    }
 }
 function safePrint() {
     const userNIP = document.getElementById('in_nip').value.trim();
