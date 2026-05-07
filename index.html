@@ -743,9 +743,15 @@ async function generateAI() {
         
         alert("✅ Narasi Berhasil Dibuat!");
 
-    } catch (e) {
-        console.error(e);
-        alert("Error: " + e.message + "\n\nCoba lagi nanti atau Hubungi Admin.");
+    catch (e) {
+    console.error("FULL ERROR:", e);
+
+    if (e instanceof Error) {
+        alert("ERROR:\n" + e.message);
+    } else {
+        alert("ERROR DETAIL:\n" + JSON.stringify(e, null, 2));
+    }
+}
     } finally {
         btn.disabled = false; 
         btn.innerText = "✨ GENERATE NARASI TINDAK LANJUT OLEH AI";
