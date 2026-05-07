@@ -115,11 +115,21 @@
         margin-bottom: 25px;
         font-size: 12pt;
     }
-    #out_foto_img {
-        max-width: 100%;
-        max-height: 16cm;
+    /* Style baru untuk foto bertumpuk ke bawah */
+    #out_foto_container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        margin-top: 10px;
+    }
+    .img-preview {
+        width: 100%;
+        max-height: 15cm;
         object-fit: contain;
         border: 1px solid #000;
+        display: block;
+        margin: 0 auto;
     }
 
     /* 5. PENGATURAN KHUSUS CETAK */
@@ -285,9 +295,14 @@
             </div>
 
             <div id="wrap_foto_input" class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
-                <label class="text-xs font-bold text-yellow-400 uppercase block mb-2">Upload Foto Kegiatan</label>
-                <input type="file" id="in_foto" accept="image/*" onchange="handleFoto(this)" required
-                    class="block w-full text-[10px] text-slate-400 file:mr-3 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-[10px] file:bg-emerald-600 file:text-white">
+                <div class="flex justify-between items-center mb-2">
+                    <label class="text-xs font-bold text-yellow-400 uppercase">Dokumentasi Foto</label>
+                    <button type="button" onclick="addFotoInput()" class="bg-emerald-600 hover:bg-emerald-500 px-2 py-1 rounded text-[10px] font-bold transition">
+                        <i class="fa-solid fa-plus mr-1"></i> Tambah Foto
+                    </button>
+                </div>
+                <div id="foto_input_container" class="space-y-2">
+                    </div>
             </div>
             
             <div class="bg-slate-700/40 border border-slate-600 rounded-lg p-3 flex items-center justify-between">
@@ -423,19 +438,17 @@
 <!-- LAMPIRAN FOTO (OTOMATIS PINDAH KE HALAMAN 2 SAAT DICETAK) -->
 <div id="section_dokumentasi" class="dokumentasi-wrap">
     <div class="lampiran-title">LAMPIRAN FOTO KEGIATAN</div>
-    <div class="w-full flex justify-center bg-gray-50 border border-gray-300 rounded-lg p-4">
-        <img id="out_foto_img" src="" class="hidden shadow-md">
-        <div id="foto_placeholder" class="text-gray-400 italic text-xs py-20 text-center">
-            (Belum ada foto kegiatan yang diupload)
+    <div id="out_foto_container">
         </div>
+    <div id="foto_placeholder" class="text-gray-400 italic text-xs py-20 text-center border border-dashed border-gray-300">
+        (Belum ada foto kegiatan yang diupload)
     </div>
-    <!-- Keterangan Foto Otomatis -->
     <div class="text-center font-bold mt-6 text-sm">
         Dokumentasi LTT <span class="label-komoditi"></span> <br>
         Periode: <span id="out_periode_lampiran">-</span>
     </div>
 </div>
-
+    
 <!-- Pop-up Ebook Selalu Muncul -->
 <div id="ebook-popup" class="fixed inset-0 z-[10000] hidden flex items-center justify-center bg-slate-900/80 backdrop-blur-sm p-4">
     <div class="bg-slate-800 border-2 border-purple-500 rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl transform transition-all scale-95 opacity-0 duration-300" id="ebook-content">
@@ -541,20 +554,57 @@ function toggleKoordinator() {
 }
 
 // Fungsi untuk memproses foto kegiatan
-function handleFoto(input) {
-    const img = document.getElementById('out_foto_img');
-    const placeholder = document.getElementById('foto_placeholder');
-    
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = (e) => { 
-            img.src = e.target.result; 
-            img.classList.remove('hidden'); 
-            placeholder.classList.add('hidden');
-        };
-        reader.readAsDataURL(input.files[0]);
+let fotoList = []; // Array untuk menyimpan data foto
+
+    function addFotoInput() {
+        const id = Date.now();
+        const container = document.getElementById('foto_input_container');
+        const div = document.createElement('div');
+        div.id = `item_foto_${id}`;
+        div.className = "flex items-center gap-2 bg-slate-900/50 p-2 rounded border border-slate-700";
+        div.innerHTML = `
+            <input type="file" accept="image/*" onchange="processFoto(${id}, this)" class="flex-grow text-[10px] file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:bg-slate-700 file:text-white">
+            <button type="button" onclick="removeFoto(${id})" class="text-red-500 hover:text-red-400 px-1"><i class="fa-solid fa-trash-can"></i></button>
+        `;
+        container.appendChild(div);
     }
-}
+
+    function processFoto(id, input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const index = fotoList.findIndex(item => item.id === id);
+                if (index > -1) fotoList[index].data = e.target.result;
+                else fotoList.push({ id: id, data: e.target.result });
+                renderFotoOutput();
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function removeFoto(id) {
+        const el = document.getElementById(`item_foto_${id}`);
+        if(el) el.remove();
+        fotoList = fotoList.filter(item => item.id !== id);
+        renderFotoOutput();
+    }
+
+    function renderFotoOutput() {
+        const container = document.getElementById('out_foto_container');
+        const placeholder = document.getElementById('foto_placeholder');
+        container.innerHTML = "";
+        if (fotoList.length > 0) {
+            placeholder.classList.add('hidden');
+            fotoList.forEach(foto => {
+                const img = document.createElement('img');
+                img.src = foto.data;
+                img.className = "img-preview shadow-md mb-4";
+                container.appendChild(img);
+            });
+        } else {
+            placeholder.classList.remove('hidden');
+        }
+    }
 
     function handleTTD(input) {
         const img = document.getElementById('out_ttd_img');
@@ -666,7 +716,6 @@ function sync() {
 }
 function safePrint() {
     const userNIP = document.getElementById('in_nip').value.trim();
-const fotoInput = document.getElementById('in_foto');
 const tipePeriode = document.getElementById('in_tipe_periode').value;
 
     if (!userNIP) {
@@ -674,8 +723,8 @@ const tipePeriode = document.getElementById('in_tipe_periode').value;
         return;
     }
 
-if (fotoInput.files.length === 0) {
-        alert("⚠️ FOTO KEGIATAN WAJIB DIUPLOAD!\nMohon lampirkan foto dokumentasi sebelum mencetak.");
+if (fotoList.length === 0) {
+        alert("⚠️ FOTO KEGIATAN WAJIB DIUPLOAD!");
         return;
     }
 
@@ -755,7 +804,8 @@ const hasilNarasi = data.choices[0].message.content;
     window.onload = function() {
         renderInputs();
         toggleKoordinator();
-        updateDataPenyuluh(); // Ini akan otomatis mengisi NIP & Wilbin jika input Nama sudah ada isinya
+        updateDataPenyuluh();
+        addFotoInput(); // Tambahkan baris ini
         sync();
     };
     
