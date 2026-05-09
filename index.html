@@ -709,22 +709,24 @@ function sync() {
     out('out_nip_kor', val('in_nip_kor'));
 
     // 7. Kontrol Tampilan Halaman Dokumentasi
-    const wrapDok = document.getElementById('section_dokumentasi');
-    if (wrapDok) {
-        wrapDok.style.display = (tipe === 'bulanan') ? 'block' : 'none';
-    }
+    // Bagian di dalam fungsi sync()
+const wrapDok = document.getElementById('section_dokumentasi');
+if (wrapDok) {
+    wrapDok.style.display = (tipe === 'bulanan') ? 'block' : 'none';
+}
 }
 function safePrint() {
     const userNIP = document.getElementById('in_nip').value.trim();
-const tipePeriode = document.getElementById('in_tipe_periode').value;
+    const tipePeriode = document.getElementById('in_tipe_periode').value;
 
     if (!userNIP) {
         alert("Silakan isi NIP terlebih dahulu.");
         return;
     }
 
-if (fotoList.length === 0) {
-        alert("⚠️ FOTO KEGIATAN WAJIB DIUPLOAD!");
+    // PERBAIKAN: Foto hanya wajib jika periode adalah 'bulanan'
+    if (tipePeriode === 'bulanan' && fotoList.length === 0) {
+        alert("⚠️ FOTO KEGIATAN WAJIB DIUPLOAD UNTUK LAPORAN BULANAN!");
         return;
     }
 
